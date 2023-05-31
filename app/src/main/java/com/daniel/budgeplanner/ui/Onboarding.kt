@@ -4,36 +4,27 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.ui.composables.ContinueButton
+import com.daniel.budgeplanner.ui.composables.InputTextField
 import com.daniel.budgeplanner.ui.composables.TopShape
-import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
 fun Onboarding(navController: NavController) {
-    var text by remember {
-        mutableStateOf(TextFieldValue(""))
-    }
-
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -43,42 +34,14 @@ fun Onboarding(navController: NavController) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding( bottom = 12.dp)
+                .padding(bottom = 12.dp)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
+
             TopShape("Configuremos tu presupuesto")
 
-            OutlinedTextField(
-                value = text,
-                label = {
-                    Text(
-                        text = "Danos tu nombre",
-                        style = TextStyle(
-                            fontSize = 18.sp
-                        )
-                    )
-                },
-                onValueChange = {
-                    if (it.text.length <= 30) text = it
-                },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = BudgetGreen,
-                    focusedLabelColor = Color.Black,
-                    unfocusedBorderColor = BudgetGreen,
-                    unfocusedLabelColor = Color.Gray,
-                ),
-                enabled = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 10.dp,
-                        horizontal = 12.dp
-                    ),
-                visualTransformation = VisualTransformation.None,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
-            )
+            InputTextField(title = "Danos tu nombre")
 
             Text(
                 text = "Tenemos gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personailzadas para ti.",
@@ -104,16 +67,19 @@ fun Onboarding(navController: NavController) {
                 titleText = "Gastos de Alimentación",
                 subTitleText = "Incluye aqui todos tus gastos de alimentación"
             )
+
             RightRow(
                 resourceId = R.drawable.money,
                 titleText = "Gastos hormiga",
                 subTitleText = "Incluye aqui todos los gastos que no tengas establecidos dentro de tu presupuesto"
             )
+
             LeftRow(
                 resourceId = R.drawable.services,
                 titleText = "Servicios",
                 subTitleText = "Incluye aquí todos los gastos de servicios públicos y privados"
             )
+
             CategoryText(text = "Las categorias de ingresos estan divididas en:")
 
             RightRow(
@@ -121,6 +87,7 @@ fun Onboarding(navController: NavController) {
                 titleText = "Ingresos mensuales",
                 subTitleText = "Incluye aquí todos los ingresos derivados de salarios o bonificaciones mensuales"
             )
+
             LeftRow(
                 resourceId = R.drawable.various_input,
                 titleText = "Ingresos varios",

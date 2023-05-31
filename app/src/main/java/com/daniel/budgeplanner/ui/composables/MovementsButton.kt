@@ -1,0 +1,54 @@
+package com.daniel.budgeplanner.ui.composables
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.daniel.budgeplanner.ui.theme.CardColor
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MovementButton(
+    icon: Int,
+    text: String,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(width = 97.dp)
+            .height(height = 91.dp),
+        backgroundColor = CardColor,
+        elevation = 4.dp,
+        shape = RoundedCornerShape(size = 12.dp),
+        onClick = onClick
+    ) {
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Image(
+                modifier = Modifier
+                    .size(50.dp),
+                painter = painterResource(id = icon),
+                contentDescription = "Income")
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+    }
+}

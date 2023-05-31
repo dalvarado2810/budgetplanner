@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.TopShape
+import com.daniel.budgeplanner.ui.theme.BackGround
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 
@@ -27,7 +28,7 @@ fun GetStarted(navController: NavController) {
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xfff0f4f3))
+            .background(color = BackGround)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

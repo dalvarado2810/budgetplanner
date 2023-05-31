@@ -7,7 +7,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -18,13 +17,6 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 
 @Composable
 fun ContinueButton(text: String, onButtonClick: () -> Unit) {
-    Column(
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .width(width = 325.dp)
-            .height(height = 60.dp)
-    ) {
         Button(
             onClick = onButtonClick,
             elevation = ButtonDefaults.elevation(
@@ -54,4 +46,3 @@ fun ContinueButton(text: String, onButtonClick: () -> Unit) {
             )
         }
     }
-}
