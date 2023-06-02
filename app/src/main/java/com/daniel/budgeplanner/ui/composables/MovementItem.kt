@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -17,7 +16,9 @@ import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.data.MovementItem
+import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.ui.theme.CardColor
+import com.daniel.budgeplanner.ui.theme.ExpensesColor
 
 @Composable
 fun MovementItem(
@@ -103,8 +104,8 @@ fun AmountTextView(
     val textColor = when (item.category) {
         Category.FOOD_EXPENSES,
         Category.ANT_EXPENSES,
-        Category.SERVICES_EXPENSES -> Color.Red
-        else -> Color.Green
+        Category.SERVICES_EXPENSES -> ExpensesColor
+        else -> BudgetGreen
     }
 
     Box(

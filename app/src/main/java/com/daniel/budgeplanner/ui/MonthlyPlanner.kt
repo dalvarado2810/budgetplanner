@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,11 +22,27 @@ import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.data.MovementItem
 import com.daniel.budgeplanner.ui.composables.*
+import com.daniel.budgeplanner.ui.theme.BudgetGreen
+import com.daniel.budgeplanner.ui.theme.CardColor
+import com.daniel.budgeplanner.ui.theme.ExpensesColor
 import com.daniel.budgeplanner.utils.ScreensNavigation
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MonthlyPlanner(
     navController: NavController){
+
+    val itemList = movementItemList()
+    val coroutineScope = rememberCoroutineScope()
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = true
+    )
+    val myColorState = remember {
+        mutableStateOf(Color.Black)
+    }
 
     Box(
         contentAlignment = Alignment.TopStart,
@@ -36,7 +53,6 @@ fun MonthlyPlanner(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             TopShape("Planifiquemos tu presupuesto")
 
             Column(
@@ -73,7 +89,8 @@ fun MonthlyPlanner(
                         icon = R.drawable.income_icon,
                         text = "Ingreso"
                     ) {
-                        navController.navigate(ScreensNavigation.GetStarted.routes)
+                        myColorState.value = BudgetGreen
+                        coroutineScope.launch { modalBottomSheetState.show() }
                     }
 
                     Spacer(
@@ -85,23 +102,13 @@ fun MonthlyPlanner(
                         icon = R.drawable.outcome_icon,
                         text = "Gasto"
                     ) {
-                        navController.navigate(ScreensNavigation.GetStarted.routes)
+                        myColorState.value = ExpensesColor
+                        coroutineScope.launch { modalBottomSheetState.show() }
                     }
                 }
 
-                Text(
-                    text = "Ultimas transacciones agregadas",
-                    color = Color.Black,
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                )
+                TransactionsTextTitle()
 
-                val itemList = movementItemList()
                 if (itemList.isEmpty()) {
                     NoMovementsItem()
                 } else {
@@ -126,6 +133,21 @@ fun MonthlyPlanner(
             ContinueButton(text = "Calcula ahora tu presupuesto") {
                 navController.navigate(ScreensNavigation.OnBoarding.routes)
             }
+        }
+
+        ModalBottomSheetLayout(
+            sheetState = modalBottomSheetState,
+            sheetContent = {
+                BottomSheetOperationDialog(myColorState.value) {
+                    coroutineScope.launch { modalBottomSheetState.hide() }
+                }
+            },
+            sheetBackgroundColor = CardColor,
+            sheetShape = RoundedCornerShape(topStart = 48.dp, topEnd = 48.dp),
+            sheetElevation = 6.dp,
+
+        ) {
+
         }
     }
 }
