@@ -1,5 +1,7 @@
 package com.daniel.budgeplanner.ui
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,12 +14,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.daniel.budgeplanner.MainContract
+import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.data.MovementItem
@@ -31,8 +37,13 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MonthlyPlanner(
-    navController: NavController){
+    navController: NavController,
+    viewModel: MainViewModel){
 
+
+    val viewState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
     val itemList = movementItemList()
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(
@@ -42,6 +53,15 @@ fun MonthlyPlanner(
     )
     val myColorState = remember {
         mutableStateOf(Color.Black)
+    }
+
+    when(viewState.screenState) {
+        is MainContract.ScreenState.Success -> {
+            showToast(context, (viewState.screenState as MainContract.ScreenState.Success).data)
+        }
+        is MainContract.ScreenState.initial -> {}
+        is MainContract.ScreenState.Loading -> {}
+        is MainContract.ScreenState.error -> {}
     }
 
     Box(
@@ -90,7 +110,7 @@ fun MonthlyPlanner(
                         text = "Ingreso"
                     ) {
                         myColorState.value = BudgetGreen
-                        coroutineScope.launch { modalBottomSheetState.show() }
+                        coroutineScope.launch { viewModel.setEvent(MainContract.Event.AddName) }
                     }
 
                     Spacer(
@@ -103,7 +123,7 @@ fun MonthlyPlanner(
                         text = "Gasto"
                     ) {
                         myColorState.value = ExpensesColor
-                        coroutineScope.launch { modalBottomSheetState.show() }
+                        coroutineScope.launch { viewModel.setEvent(MainContract.Event.AddExpenses) }
                     }
                 }
 
@@ -139,7 +159,7 @@ fun MonthlyPlanner(
             sheetState = modalBottomSheetState,
             sheetContent = {
                 BottomSheetOperationDialog(myColorState.value) {
-                    coroutineScope.launch { modalBottomSheetState.hide() }
+                    coroutineScope.launch { }
                 }
             },
             sheetBackgroundColor = CardColor,
@@ -150,6 +170,10 @@ fun MonthlyPlanner(
 
         }
     }
+}
+
+private fun showToast(context: Context, text: String) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
 fun movementItemList() = listOf(MovementItem(

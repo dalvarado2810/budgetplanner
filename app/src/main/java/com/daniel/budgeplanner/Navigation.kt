@@ -10,7 +10,7 @@ import com.daniel.budgeplanner.ui.Onboarding
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
-fun Navigation () {
+fun Navigation (viewModel: MainViewModel) {
     val navController = rememberNavController()
 
     NavHost(
@@ -24,7 +24,7 @@ fun Navigation () {
             Onboarding(navController = navController)
         }
         composable(route = ScreensNavigation.MonthlyPlanner.routes) {
-            MonthlyPlanner(navController = navController)
+            MonthlyPlanner(navController = navController, viewModel = viewModel)
         }
     }
 
