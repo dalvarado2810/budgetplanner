@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,20 +18,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.R
+import com.daniel.budgeplanner.data.Category
+import com.daniel.budgeplanner.domain.entity.Movement
+import com.daniel.budgeplanner.domain.entity.MovementType
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
+import com.daniel.budgeplanner.utils.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Composable
 fun BottomSheetOperationDialog(
     color: Color,
-    saveClick: () ->  Unit
+    saveClick: (movement: Movement) ->  Unit,
+    closeClick: () -> Unit
 ) {
 
     val title = if (color == BudgetGreen) "INGRESO" else "GASTO"
     val categories = if (color == BudgetGreen) {
-        listOf("Ingreso Mensual", "Ingresos Varios")
+        listOf(MONTHLY_INCOMES, OTHER_INCOMES)
     } else {
-        listOf("Gasto de alimentacion", "Gastos hormiga", "Servicios")
+        listOf(FOOD_EXPENSES, ANT_EXPENSES, SERVICES_EXPENSES )
     }
+    val categorySelected = remember { mutableStateOf("") }
 
     var descriptionText by remember {
         mutableStateOf(TextFieldValue(""))
@@ -38,6 +49,13 @@ fun BottomSheetOperationDialog(
     var amountText by remember {
         mutableStateOf(TextFieldValue(""))
     }
+
+    var category by remember {
+        mutableStateOf(Category.OTHER_INCOMES)
+    }
+
+    val isChecked = remember { mutableStateOf(false) }
+    val colorCheck = remember { mutableStateOf(Color.Gray) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,11 +83,28 @@ fun BottomSheetOperationDialog(
             )
         }
 
+
+
+        IconButton(
+            onClick = {
+                closeClick()
+                categorySelected.value = ""
+                      },
+            modifier = Modifier
+                .align(Alignment.End)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = "",
+                tint = Color.Black,
+            )
+        }
+
+
         DialogText(
             text = "Descripción",
             size = 18
         )
-
 
         Card(
             shape = RoundedCornerShape(24.dp),
@@ -95,7 +130,6 @@ fun BottomSheetOperationDialog(
                 )
             )
         }
-
 
         DialogText(
             text = "Monto",
@@ -139,14 +173,68 @@ fun BottomSheetOperationDialog(
         )
 
         Column(horizontalAlignment = Alignment.Start) {
-            categories.forEach {
-                RoundedCheckButton(item = it)
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    categories.forEach { item ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = categorySelected.value == item,
+                                onCheckedChange = {
+                                    category = item.toCategoryItem()
+                                    if (categorySelected.value != item) {
+                                        categorySelected.value = item
+                                    }
+
+                                },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = BudgetGreen,
+                                    uncheckedColor = Color.Gray
+                                )
+                            )
+                            Text(text = item)
+                        }
+
+                    }
+                }
             }
         }
 
-
-        ContinueButton(text = "Guardar", onButtonClick = saveClick)
+        ContinueButton(text = "Guardar") {
+            val movement = Movement(
+                id = 0,
+                movementDescription = descriptionText.text,
+                movementAmount = amountText.text,
+                movementType = if (color == BudgetGreen) MovementType.INCOME else MovementType.EXPENSE,
+                movementUser = "Daniel",
+                month = 7,
+                year = 2023,
+                movementCategory = category,
+                date = obtainActualDate()
+            )
+            descriptionText = TextFieldValue("")
+            amountText = TextFieldValue("")
+            categorySelected.value = ""
+            isChecked.value = false
+            colorCheck.value = Color.Gray
+            saveClick(movement)
+        }
     }
+}
+
+private fun obtainActualDate(): String {
+
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH) + 1
+    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+    return dateTimeFormatter.format(LocalDate.of(year, month, dayOfMonth))
+
 }
 
 

@@ -32,6 +32,7 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.ui.theme.CardColor
 import com.daniel.budgeplanner.ui.theme.ExpensesColor
 import com.daniel.budgeplanner.utils.ScreensNavigation
+import com.daniel.budgeplanner.utils.toMovementItem
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -40,15 +41,14 @@ fun MonthlyPlanner(
     navController: NavController,
     viewModel: MainViewModel){
 
-
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val itemList = movementItemList()
+    val itemList by viewModel.monthlyMovements.collectAsState(initial = emptyList())
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        confirmValueChange = { false },
         skipHalfExpanded = true
     )
     val myColorState = remember {
@@ -90,18 +90,16 @@ fun MonthlyPlanner(
                             "la planificación de tu presupuesto mensual.",
                     color = Color.Black,
                     style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                        lineBreak = LineBreak.Simple,
-                        lineHeight = 24.sp
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
                     )
                 )
 
                 Row(
                     modifier = Modifier
                         .padding(
-                            horizontal = 18.dp,
-                            vertical = 16.dp
+                            horizontal = 10.dp,
+                            vertical = 10.dp
                         )
                 ) {
 
@@ -110,7 +108,7 @@ fun MonthlyPlanner(
                         text = "Ingreso"
                     ) {
                         myColorState.value = BudgetGreen
-                        coroutineScope.launch { viewModel.setEvent(MainContract.Event.AddName) }
+                        coroutineScope.launch { modalBottomSheetState.show() }
                     }
 
                     Spacer(
@@ -123,7 +121,7 @@ fun MonthlyPlanner(
                         text = "Gasto"
                     ) {
                         myColorState.value = ExpensesColor
-                        coroutineScope.launch { viewModel.setEvent(MainContract.Event.AddExpenses) }
+                        coroutineScope.launch { modalBottomSheetState.show() }
                     }
                 }
 
@@ -135,10 +133,10 @@ fun MonthlyPlanner(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(230.dp)
+                            .height(280.dp)
                     ) {
-                        items(movementItemList()) { item ->
-                            MovementItem(item = item)
+                        items(itemList) { item ->
+                            MovementItem(item = item.toMovementItem())
                         }
                     }
                 }
@@ -158,9 +156,20 @@ fun MonthlyPlanner(
         ModalBottomSheetLayout(
             sheetState = modalBottomSheetState,
             sheetContent = {
-                BottomSheetOperationDialog(myColorState.value) {
-                    coroutineScope.launch { }
-                }
+                BottomSheetOperationDialog(
+                    color = myColorState.value,
+                    closeClick = {
+                        coroutineScope.launch {
+                            modalBottomSheetState.hide()
+                        }
+                    },
+                    saveClick = { movement ->
+                        coroutineScope.launch {
+                            viewModel.addMovement(movement)
+                            modalBottomSheetState.hide()
+                        }
+                    }
+                )
             },
             sheetBackgroundColor = CardColor,
             sheetShape = RoundedCornerShape(topStart = 48.dp, topEnd = 48.dp),
@@ -175,41 +184,3 @@ fun MonthlyPlanner(
 private fun showToast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
-
-fun movementItemList() = listOf(MovementItem(
-    name = "Pago de Salario",
-    category = Category.MONTHLY_INCOMES,
-    date = "23/05/2023",
-    amount = "200.000.000"
-    ),
-    MovementItem(
-        name = "Esval",
-        category = Category.SERVICES_EXPENSES,
-        date = "28/05/2023",
-        amount = "62.000"
-    ),
-    MovementItem(
-        name = "Pago de Finiquito Vane",
-        category = Category.OTHER_INCOMES,
-        date = "20/05/2023",
-        amount = "200.000"
-    ),
-    MovementItem(
-        name = "GASCO",
-        category = Category.SERVICES_EXPENSES,
-        date = "18/05/2023",
-        amount = "68.000"
-    ),
-    MovementItem(
-        name = "Metamucil",
-        category = Category.ANT_EXPENSES,
-        date = "29/05/2023",
-        amount = "28.000"
-    ),
-    MovementItem(
-        name = "Carnes",
-        category = Category.FOOD_EXPENSES,
-        date = "28/05/2023",
-        amount = "190.000"
-    )
-)

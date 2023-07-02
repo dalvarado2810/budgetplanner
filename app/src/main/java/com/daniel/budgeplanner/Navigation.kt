@@ -10,12 +10,12 @@ import com.daniel.budgeplanner.ui.Onboarding
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
-fun Navigation (viewModel: MainViewModel) {
+fun Navigation(viewModel: MainViewModel) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = ScreensNavigation.MonthlyPlanner.routes
+        startDestination = ScreensNavigation.GetStarted.routes
     ) {
         composable(route = ScreensNavigation.GetStarted.routes) {
             GetStarted(navController = navController)

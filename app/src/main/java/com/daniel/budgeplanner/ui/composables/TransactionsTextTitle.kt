@@ -20,7 +20,7 @@ fun TransactionsTextTitle() {
 
     Row(modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)
+        .padding(6.dp)
     ) {
         Text(
             text = "Ultimas transacciones",

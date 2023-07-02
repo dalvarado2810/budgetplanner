@@ -111,8 +111,8 @@ fun Onboarding(navController: NavController) {
                     )
             )
 
-            ContinueButton(text = "Regresemos") {
-                navController.navigate(ScreensNavigation.GetStarted.routes)
+            ContinueButton(text = "Continuemos") {
+                navController.navigate(ScreensNavigation.MonthlyPlanner.routes)
             }
         }
     }

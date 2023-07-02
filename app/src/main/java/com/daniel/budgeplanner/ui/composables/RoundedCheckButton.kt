@@ -22,17 +22,21 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.daniel.budgeplanner.data.Category
+import com.daniel.budgeplanner.data.CheckButton
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
+import com.daniel.budgeplanner.utils.toCategoryItem
 
 @Composable
 fun RoundedCheckButton(
-    item: String
+    item: String,
+    categoryCheck: (item: Category) -> Unit
 ) {
     val isChecked = remember { mutableStateOf(false) }
-    val checkedText = remember { mutableStateOf(item) }
     val circleSize = remember { mutableStateOf(20.dp) }
     val circleThickness = remember { mutableStateOf(2.dp) }
     val color = remember { mutableStateOf(Color.Gray) }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -56,6 +60,7 @@ fun RoundedCheckButton(
             contentAlignment = Alignment.Center
         ) {
             if(isChecked.value){
+                categoryCheck(item.toCategoryItem())
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = "",
@@ -65,12 +70,11 @@ fun RoundedCheckButton(
         }
 
         Text(
-            text = checkedText.value,
+            text = item,
             color = color.value,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(start = 5.dp)
         )
     }
-
 }
