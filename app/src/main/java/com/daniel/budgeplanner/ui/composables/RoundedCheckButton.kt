@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.data.Category
-import com.daniel.budgeplanner.data.CheckButton
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.utils.toCategoryItem
 

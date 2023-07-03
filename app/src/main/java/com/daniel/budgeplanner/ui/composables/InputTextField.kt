@@ -18,11 +18,13 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 
 @Composable
 fun InputTextField(
-    title: String
+    title: String,
+    saveName: (name: String) -> Unit
 ) {
     var text by remember {
         mutableStateOf(TextFieldValue(""))
     }
+
     OutlinedTextField(
         value = text,
         label = {
@@ -34,7 +36,10 @@ fun InputTextField(
             )
         },
         onValueChange = {
-            if (it.text.length <= 30) text = it
+            if (it.text.length <= 30) {
+                text = it
+                saveName(it.text)
+            }
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = BudgetGreen,

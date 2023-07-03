@@ -7,10 +7,10 @@ import com.daniel.budgeplanner.base.UiState
 class MainContract {
 
     sealed class Event: UiEvent {
-        object AddName: Event()
+        data class AddName(val name: String): Event()
         object AddExpenses: Event()
         object AddIncomes: Event()
-        object ClearMonth: Event()
+        object ObtainAllMovements: Event()
     }
 
     data class State(

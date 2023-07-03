@@ -9,21 +9,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
+import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.TopShape
 import com.daniel.budgeplanner.ui.theme.BackGround
 import com.daniel.budgeplanner.utils.ScreensNavigation
-
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 @Composable
-fun GetStarted(navController: NavController) {
+fun GetStarted (
+    navController: NavController,
+    viewModel: MainViewModel
+) {
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -38,7 +48,7 @@ fun GetStarted(navController: NavController) {
 
             TopShape()
             Text(
-                text = "Tu Presupuesto",
+                text = stringResource(id = R.string.your_budget),
                 color = Color.Black,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
@@ -59,7 +69,7 @@ fun GetStarted(navController: NavController) {
             )
 
             Text(
-                text = "Ajusta tus gastos mensuales",
+                text = stringResource(id = R.string.regulate_expenses),
                 color = Color.Black,
                 style = TextStyle(
                     fontSize = 22.sp
@@ -67,7 +77,7 @@ fun GetStarted(navController: NavController) {
             )
 
             Text(
-                text = "Te ayudamos a planificar tus gastos mensuales",
+                text = stringResource(id = R.string.we_can_help),
                 color = Color.Black.copy(alpha = 0.7f),
                 textAlign = TextAlign.Center,
                 style = TextStyle(
@@ -80,9 +90,15 @@ fun GetStarted(navController: NavController) {
                         bottom = 120.dp
                     )
             )
-            ContinueButton(text = "Comencemos") {
-                navController.navigate(ScreensNavigation.OnBoarding.routes)
+            ContinueButton(text = stringResource(id = R.string.lets_begin)) {
+                navController.navigate(navigateRoute(viewModel))
             }
         }
     }
+}
+
+private fun navigateRoute(viewModel: MainViewModel): String {
+    return if (viewModel.isUserCreated()) {
+        ScreensNavigation.MonthlyPlanner.routes
+    } else ScreensNavigation.OnBoarding.routes
 }

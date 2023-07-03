@@ -1,6 +1,5 @@
 package com.daniel.budgeplanner.data
 
-import androidx.compose.ui.graphics.Color
 
 data class MovementItem(
     val name: String,
@@ -16,9 +15,3 @@ enum class Category(val gasto: String) {
     MONTHLY_INCOMES("Ingresos Mensuales"),
     OTHER_INCOMES("Ingresos varios")
 }
-
-data class CheckButton(
-    val category: Category,
-    val checked: Boolean,
-    val color: Color
-)

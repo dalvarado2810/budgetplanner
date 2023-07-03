@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.daniel.budgeplanner.data.database.DbMovements
 import com.daniel.budgeplanner.data.database.DbUsers
 import com.daniel.budgeplanner.data.room.MovementsDao
+import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
+import com.daniel.budgeplanner.data.sharedpreferences.SharedPreferencesImpl
 import com.daniel.budgeplanner.repositories.MovementRepository
 import com.daniel.budgeplanner.repositories.impl.MovementRepositoryImpl
 import dagger.Module
@@ -38,4 +40,9 @@ class BudgetModule {
     ): MovementRepository = MovementRepositoryImpl(
         movementsDao = movementsDao
     )
+
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): AppPreference {
+        return SharedPreferencesImpl(context)
+    }
 }

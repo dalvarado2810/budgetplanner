@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.daniel.budgeplanner.MainContract
+import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.InputTextField
@@ -24,7 +26,13 @@ import com.daniel.budgeplanner.ui.composables.TopShape
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
-fun Onboarding(navController: NavController) {
+fun Onboarding(
+    navController: NavController,
+    viewModel: MainViewModel
+) {
+
+    var name by remember { mutableStateOf("") }
+
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -41,7 +49,9 @@ fun Onboarding(navController: NavController) {
 
             TopShape("Configuremos tu presupuesto")
 
-            InputTextField(title = "Danos tu nombre")
+            InputTextField(title = "Danos tu nombre") {
+                name = it
+            }
 
             Text(
                 text = "Tenemos gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personailzadas para ti.",
@@ -112,6 +122,7 @@ fun Onboarding(navController: NavController) {
             )
 
             ContinueButton(text = "Continuemos") {
+                viewModel.setEvent(MainContract.Event.AddName(name))
                 navController.navigate(ScreensNavigation.MonthlyPlanner.routes)
             }
         }

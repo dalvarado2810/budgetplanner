@@ -9,15 +9,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.Text
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -25,8 +33,6 @@ import androidx.navigation.NavController
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
-import com.daniel.budgeplanner.data.Category
-import com.daniel.budgeplanner.data.MovementItem
 import com.daniel.budgeplanner.ui.composables.*
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.ui.theme.CardColor
@@ -149,7 +155,7 @@ fun MonthlyPlanner(
             .padding(bottom = 12.dp)
             .height(60.dp)) {
             ContinueButton(text = "Calcula ahora tu presupuesto") {
-                navController.navigate(ScreensNavigation.OnBoarding.routes)
+                navController.navigate(ScreensNavigation.BudgetDashboard.routes)
             }
         }
 

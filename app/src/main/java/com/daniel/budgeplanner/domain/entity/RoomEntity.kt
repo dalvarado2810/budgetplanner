@@ -19,7 +19,7 @@ data class Movement(
     @ColumnInfo(name = "movementID")
     val id: Int,
     val movementDescription: String,
-    val movementAmount: String,
+    val movementAmount: Int,
     val movementType: MovementType,
     val movementUser: String,
     val movementCategory: Category,

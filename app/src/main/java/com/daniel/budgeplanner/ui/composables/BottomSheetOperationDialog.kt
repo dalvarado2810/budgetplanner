@@ -206,7 +206,7 @@ fun BottomSheetOperationDialog(
             val movement = Movement(
                 id = 0,
                 movementDescription = descriptionText.text,
-                movementAmount = amountText.text,
+                movementAmount = amountText.text.toInt(),
                 movementType = if (color == BudgetGreen) MovementType.INCOME else MovementType.EXPENSE,
                 movementUser = "Daniel",
                 month = 7,

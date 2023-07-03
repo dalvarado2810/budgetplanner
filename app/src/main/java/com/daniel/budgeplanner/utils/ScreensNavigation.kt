@@ -6,4 +6,6 @@ sealed class ScreensNavigation(
     object GetStarted: ScreensNavigation("getStarted")
     object OnBoarding: ScreensNavigation("onBoarding")
     object MonthlyPlanner: ScreensNavigation("monthlyPlanner")
+
+    object BudgetDashboard: ScreensNavigation("budgetDashboard")
 }

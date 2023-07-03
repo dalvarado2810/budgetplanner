@@ -3,10 +3,11 @@ package com.daniel.budgeplanner.utils
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.data.MovementItem
 import com.daniel.budgeplanner.domain.entity.Movement
+import java.text.NumberFormat
 
 fun Movement.toMovementItem() = MovementItem (
     name = movementDescription,
-    amount = movementAmount,
+    amount = movementAmount.toString(),
     category = movementCategory,
     date = date)
 

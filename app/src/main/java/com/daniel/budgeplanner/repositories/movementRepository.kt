@@ -9,6 +9,8 @@ interface MovementRepository {
 
     fun getMovements(month: Int): Flow<Movements>
 
+    fun getActualBalance(month: Int): Flow<Int>
+
     suspend fun addMovementToDb(movement: Movement)
 
 }
