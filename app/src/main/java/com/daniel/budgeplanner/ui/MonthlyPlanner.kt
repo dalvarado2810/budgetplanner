@@ -3,7 +3,15 @@ package com.daniel.budgeplanner.ui
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -24,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,7 +42,13 @@ import androidx.navigation.NavController
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
-import com.daniel.budgeplanner.ui.composables.*
+import com.daniel.budgeplanner.ui.composables.TopShape
+import com.daniel.budgeplanner.ui.composables.MovementButton
+import com.daniel.budgeplanner.ui.composables.TransactionsTextTitle
+import com.daniel.budgeplanner.ui.composables.BottomSheetOperationDialog
+import com.daniel.budgeplanner.ui.composables.MovementItem
+import com.daniel.budgeplanner.ui.composables.NoMovementsItem
+import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.ui.theme.CardColor
 import com.daniel.budgeplanner.ui.theme.ExpensesColor
@@ -64,6 +79,7 @@ fun MonthlyPlanner(
     when(viewState.screenState) {
         is MainContract.ScreenState.Success -> {
             showToast(context, (viewState.screenState as MainContract.ScreenState.Success).data)
+            viewModel.setEvent(event = MainContract.Event.setSuccessState)
         }
         is MainContract.ScreenState.initial -> {}
         is MainContract.ScreenState.Loading -> {}
@@ -79,7 +95,7 @@ fun MonthlyPlanner(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopShape("Planifiquemos tu presupuesto")
+            TopShape(stringResource(id = R.string.plan_your_budget))
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -88,12 +104,8 @@ fun MonthlyPlanner(
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
             ) {
-
                 Text(
-                    text = "A continuación agrega tu gasto o " +
-                            "ingreso segun su clasificación y al " +
-                            "terminar presiona continuar y tendrás " +
-                            "la planificación de tu presupuesto mensual.",
+                    text = stringResource(id = R.string.plan_your_budget_instructions),
                     color = Color.Black,
                     style = TextStyle(
                         fontSize = 12.sp,
@@ -111,7 +123,7 @@ fun MonthlyPlanner(
 
                     MovementButton(
                         icon = R.drawable.income_icon,
-                        text = "Ingreso"
+                        text = stringResource(id = R.string.incomes)
                     ) {
                         myColorState.value = BudgetGreen
                         coroutineScope.launch { modalBottomSheetState.show() }
@@ -124,7 +136,7 @@ fun MonthlyPlanner(
 
                     MovementButton(
                         icon = R.drawable.outcome_icon,
-                        text = "Gasto"
+                        text = stringResource(id = R.string.outcomes)
                     ) {
                         myColorState.value = ExpensesColor
                         coroutineScope.launch { modalBottomSheetState.show() }
@@ -147,14 +159,13 @@ fun MonthlyPlanner(
                     }
                 }
             }
-
         }
 
         Column(modifier = Modifier
             .align(Alignment.BottomCenter)
             .padding(bottom = 12.dp)
             .height(60.dp)) {
-            ContinueButton(text = "Calcula ahora tu presupuesto") {
+            ContinueButton(text = stringResource(id = R.string.calculate_your_budget)) {
                 navController.navigate(ScreensNavigation.BudgetDashboard.routes)
             }
         }
@@ -163,6 +174,7 @@ fun MonthlyPlanner(
             sheetState = modalBottomSheetState,
             sheetContent = {
                 BottomSheetOperationDialog(
+                    user = viewModel.getUserName(),
                     color = myColorState.value,
                     closeClick = {
                         coroutineScope.launch {
@@ -171,7 +183,7 @@ fun MonthlyPlanner(
                     },
                     saveClick = { movement ->
                         coroutineScope.launch {
-                            viewModel.addMovement(movement)
+                            viewModel.setEvent(event = MainContract.Event.AddMovements(movement))
                             modalBottomSheetState.hide()
                         }
                     }
@@ -180,10 +192,7 @@ fun MonthlyPlanner(
             sheetBackgroundColor = CardColor,
             sheetShape = RoundedCornerShape(topStart = 48.dp, topEnd = 48.dp),
             sheetElevation = 6.dp,
-
-        ) {
-
-        }
+        ) { }
     }
 }
 

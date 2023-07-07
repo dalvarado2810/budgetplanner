@@ -9,11 +9,47 @@
 
     <!-- Onboarding-->
 
+    <string name="set_your_budget">Configuremos tu presupuesto</string>
+    <string name="give_us_your_name">Danos tu nombre</string>
+    <string name="add_operations">  Tenemos gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personalizadas para ti.</string>
+    <string name="expenses_categories_divided_to">Las categorias de gastos estan divididas en:</string>
+    <string name="ant_expenses">Gastos hormiga</string>
+    <string name="ant_expenses_description">Incluye aqui todos los gastos que no tengas establecidos dentro de tu presupuesto</string>
+    <string name="food_expenses">Gastos Alimetación</string>
+    <string name="food_expenses_description">Incluye aqui todos tus gastos de alimentación</string>
+    <string name="services_expenses">Servicios</string>
+    <string name="services_expenses_description">Incluye aquí todos los gastos de servicios públicos y privados</string>
+    <string name="incomes_categories_divided_to">Las categorias de ingresos estan divididas en:</string>
+    <string name="monthly_incomes">Ingresos mensuales</string>
+    <string name="monthly_incomes_description">Incluye aquí todos los ingresos derivados de salarios o bonificaciones mensuales</string>
+    <string name="various_incomes">Ingresos varios</string>
+    <string name="various_incomes_description">Incluye aquí todos los ingresos adicionales que obtengas en el mes</string>
+    <string name="lets_begin_planning">Ahora comencemos a planificar el presupuesto de tu mes.</string>
+    <string name="lets_go">Continuemos</string>
 
+    <!-- Monthly Planner-->
+    <string name="plan_your_budget">Planifiquemos tu presupuesto</string>
+    <string name="plan_your_budget_instructions">A continuación agrega tu gasto o ingreso segun su clasificación y al terminar presiona continuar y tendrás a planificación de tu presupuesto mensual.</string>
+    <string name="calculate_your_budget">Calcula ahora tu presupuesto</string>
+
+    <!-- Dashboard-->
     <string name="incomes">Ingresos</string>
     <string name="outcomes">Gastos</string>
     <string name="hello">Hola, </string>
     <string name="your_balance">Tu Balance</string>
     <string name="money_sign">$  </string>
+    <string name="movement_saved">Movimiento guardado</string>
+    <string name="go_to_first_movement">Ir al primer movimiento</string>
+
+    <!-- Composables-->
+    <string name="income">INGRESO</string>
+    <string name="outcome">GASTO</string>
+    <string name="description">Descripción</string>
+    <string name="amount">Monto</string>
+    <string name="category">Tipo</string>
+    <string name="save_movement">Guardar</string>
+    <string name="item_amount">$ %1$s</string>
+    <string name="no_movements_add">No tienes transacciones agregadas</string>
+    <string name="last_transactions">Ultimas transacciones</string>
 
 </resources>

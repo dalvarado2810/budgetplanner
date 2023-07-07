@@ -3,13 +3,14 @@ package com.daniel.budgeplanner
 import com.daniel.budgeplanner.base.UiEffect
 import com.daniel.budgeplanner.base.UiEvent
 import com.daniel.budgeplanner.base.UiState
+import com.daniel.budgeplanner.domain.entity.Movement
 
 class MainContract {
 
     sealed class Event: UiEvent {
         data class AddName(val name: String): Event()
-        object AddExpenses: Event()
-        object AddIncomes: Event()
+        data class AddMovements(val movement: Movement): Event()
+        object setSuccessState: Event()
         object ObtainAllMovements: Event()
     }
 

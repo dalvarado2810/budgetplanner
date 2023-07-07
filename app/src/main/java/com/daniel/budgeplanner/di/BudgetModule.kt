@@ -3,7 +3,6 @@ package com.daniel.budgeplanner.di
 import android.content.Context
 import androidx.room.Room
 import com.daniel.budgeplanner.data.database.DbMovements
-import com.daniel.budgeplanner.data.database.DbUsers
 import com.daniel.budgeplanner.data.room.MovementsDao
 import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.data.sharedpreferences.SharedPreferencesImpl
@@ -14,7 +13,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 const val DB_MOVEMENTS = "DB_MOVEMENTS"
 

@@ -5,9 +5,7 @@ import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.domain.entity.MovementType
 import com.daniel.budgeplanner.repositories.MovementRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.forEach
 
 class MovementRepositoryImpl(
     private val movementsDao: MovementsDao
@@ -22,7 +20,7 @@ class MovementRepositoryImpl(
         movements.collect { list ->
             var balance = 0
             list.forEach { item ->
-                when(item.movementType) {
+                when (item.movementType) {
                     MovementType.EXPENSE -> {
                         balance -= item.movementAmount
                     }
@@ -33,10 +31,7 @@ class MovementRepositoryImpl(
             }
             emit(balance)
         }
-
     }
 
-    override suspend fun addMovementToDb(movement: Movement) = movementsDao
-        .addMovement(movement)
-
+    override suspend fun addMovementToDb(movement: Movement) = movementsDao.addMovement(movement)
 }

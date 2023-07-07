@@ -7,19 +7,12 @@ import com.daniel.budgeplanner.data.room.UsersDao
 import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.domain.entity.User
 
-
-@Database(
-    entities = [User::class],
-    version = 1
-)
+@Database(entities = [User::class], version = 1)
 abstract class DbUsers: RoomDatabase() {
     abstract fun usersDao(): UsersDao
 }
 
-@Database(
-    entities = [Movement::class],
-    version = 2
-)
+@Database(entities = [Movement::class], version = 2)
 abstract class DbMovements: RoomDatabase() {
     abstract val movementsDao: MovementsDao
 }

@@ -1,6 +1,5 @@
 package com.daniel.budgeplanner.data
 
-
 data class MovementItem(
     val name: String,
     val category: Category,

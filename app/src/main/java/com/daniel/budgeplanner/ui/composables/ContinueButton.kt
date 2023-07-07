@@ -1,6 +1,8 @@
 package com.daniel.budgeplanner.ui.composables
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -16,33 +18,35 @@ import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 
 @Composable
-fun ContinueButton(text: String, onButtonClick: () -> Unit) {
-        Button(
-            onClick = onButtonClick,
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 2.dp
-            ),
-            shape = RoundedCornerShape(corner = CornerSize(8.dp)),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = BudgetGreen,
-                contentColor = Color.Black
-
-            ),
-            modifier = Modifier
-                .width(width = 325.dp)
-                .height(height = 60.dp),
-            contentPadding = PaddingValues(
-                start = 32.dp,
-                end = 32.dp
+fun ContinueButton(
+    text: String,
+    onButtonClick: () -> Unit
+) {
+    Button(
+        onClick = onButtonClick,
+        elevation = ButtonDefaults.elevation(
+            defaultElevation = 2.dp
+        ),
+        shape = RoundedCornerShape(corner = CornerSize(8.dp)),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = BudgetGreen,
+            contentColor = Color.Black
+        ),
+        modifier = Modifier
+            .width(width = 325.dp)
+            .height(height = 60.dp),
+        contentPadding = PaddingValues(
+            start = 32.dp,
+            end = 32.dp
+        )
+    ) {
+        Text(
+            text = text,
+            color = Color.Black,
+            textAlign = TextAlign.Center,
+            style = TextStyle(
+                fontSize = 19.sp
             )
-        ) {
-            Text(
-                text = text,
-                color = Color.Black,
-                textAlign = TextAlign.Center,
-                style = TextStyle(
-                    fontSize = 19.sp
-                )
-            )
-        }
+        )
     }
+}

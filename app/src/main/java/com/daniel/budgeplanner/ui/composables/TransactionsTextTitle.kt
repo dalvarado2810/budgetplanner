@@ -9,21 +9,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.R
+import com.daniel.budgeplanner.utils.ICON
 
 @Composable
-fun TransactionsTextTitle() {
-
+fun TransactionsTextTitle(
+) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(6.dp)
     ) {
         Text(
-            text = "Ultimas transacciones",
+            text = stringResource(id = R.string.last_transactions),
             color = Color.Black,
             style = TextStyle(
                 fontSize = 20.sp,
@@ -35,11 +37,10 @@ fun TransactionsTextTitle() {
         )
         Image(
             painter = painterResource(id = R.drawable.filter_icon),
-            contentDescription = "filter_icon",
+            contentDescription = ICON,
             modifier = Modifier
                 .weight(1F)
                 .padding(start = 12.dp),
         )
     }
-
 }

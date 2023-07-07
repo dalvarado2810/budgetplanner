@@ -2,8 +2,14 @@ package com.daniel.budgeplanner.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,19 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
-import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.TopShape
 import com.daniel.budgeplanner.ui.theme.BackGround
+import com.daniel.budgeplanner.utils.IMAGE
 import com.daniel.budgeplanner.utils.ScreensNavigation
-import dagger.hilt.EntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 @Composable
 fun GetStarted (
@@ -58,7 +59,7 @@ fun GetStarted (
             )
             Image(
                 painter = painterResource(id = R.drawable.true_friends),
-                contentDescription = "image 1",
+                contentDescription = IMAGE,
                 modifier = Modifier
                     .width(width = 290.dp)
                     .height(height = 235.dp)

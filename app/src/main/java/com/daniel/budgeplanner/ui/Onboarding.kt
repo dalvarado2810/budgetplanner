@@ -2,15 +2,28 @@ package com.daniel.budgeplanner.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
@@ -23,6 +36,8 @@ import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.InputTextField
 import com.daniel.budgeplanner.ui.composables.TopShape
+import com.daniel.budgeplanner.utils.EMPTY_STRING
+import com.daniel.budgeplanner.utils.ICON
 import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
@@ -30,8 +45,7 @@ fun Onboarding(
     navController: NavController,
     viewModel: MainViewModel
 ) {
-
-    var name by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(EMPTY_STRING) }
 
     Box(
         contentAlignment = Alignment.TopStart,
@@ -47,14 +61,14 @@ fun Onboarding(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            TopShape("Configuremos tu presupuesto")
+            TopShape(stringResource(id = R.string.set_your_budget))
 
-            InputTextField(title = "Danos tu nombre") {
+            InputTextField(title = stringResource(id = R.string.give_us_your_name)) {
                 name = it
             }
 
             Text(
-                text = "Tenemos gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personailzadas para ti.",
+                text = stringResource(id = R.string.add_operations),
                 color = Color.Black,
                 style = TextStyle(
                     fontSize = 14.sp,
@@ -70,42 +84,42 @@ fun Onboarding(
             )
 
             CategoryText(
-                text = "Las categorias de gastos estan divididas en:")
+                text = stringResource(id = R.string.expenses_categories_divided_to))
 
             LeftRow(
                 resourceId = R.drawable.shopping_cart,
-                titleText = "Gastos de Alimentación",
-                subTitleText = "Incluye aqui todos tus gastos de alimentación"
+                titleText = stringResource(id = R.string.food_expenses),
+                subTitleText = stringResource(id = R.string.food_expenses_description)
             )
 
             RightRow(
                 resourceId = R.drawable.money,
-                titleText = "Gastos hormiga",
-                subTitleText = "Incluye aqui todos los gastos que no tengas establecidos dentro de tu presupuesto"
+                titleText = stringResource(id = R.string.ant_expenses),
+                subTitleText = stringResource(id = R.string.ant_expenses_description)
             )
 
             LeftRow(
                 resourceId = R.drawable.services,
-                titleText = "Servicios",
-                subTitleText = "Incluye aquí todos los gastos de servicios públicos y privados"
+                titleText = stringResource(id = R.string.services_expenses),
+                subTitleText = stringResource(id = R.string.services_expenses_description)
             )
 
-            CategoryText(text = "Las categorias de ingresos estan divididas en:")
+            CategoryText(text = stringResource(id = R.string.incomes_categories_divided_to))
 
             RightRow(
                 resourceId = R.drawable.finance_icon,
-                titleText = "Ingresos mensuales",
-                subTitleText = "Incluye aquí todos los ingresos derivados de salarios o bonificaciones mensuales"
+                titleText = stringResource(id = R.string.monthly_incomes),
+                subTitleText = stringResource(id = R.string.monthly_incomes_description)
             )
 
             LeftRow(
                 resourceId = R.drawable.various_input,
-                titleText = "Ingresos varios",
-                subTitleText = "Incluye aquí todos los ingresos adicionales que obtengas en el mes"
+                titleText = stringResource(id = R.string.various_incomes),
+                subTitleText = stringResource(id = R.string.various_incomes_description)
             )
 
             Text(
-                text = "Ahora comencemos a planificar el presupuesto de tu mes.",
+                text = stringResource(id = R.string.lets_begin_planning),
                 color = Color.Black,
                 style = TextStyle(
                     fontSize = 14.sp,
@@ -121,7 +135,7 @@ fun Onboarding(
                     )
             )
 
-            ContinueButton(text = "Continuemos") {
+            ContinueButton(text = stringResource(id = R.string.lets_go)) {
                 viewModel.setEvent(MainContract.Event.AddName(name))
                 navController.navigate(ScreensNavigation.MonthlyPlanner.routes)
             }
@@ -144,7 +158,7 @@ fun LeftRow(
     ) {
         Image(
             painter = painterResource(id = resourceId),
-            contentDescription = "icon",
+            contentDescription = ICON,
             modifier = Modifier
                 .padding()
                 .height(50.dp)
@@ -202,7 +216,7 @@ fun RightRow(
         }
         Image(
             painter = painterResource(id = resourceId),
-            contentDescription = "icon",
+            contentDescription = ICON,
             modifier = Modifier
                 .height(50.dp)
                 .width(50.dp))

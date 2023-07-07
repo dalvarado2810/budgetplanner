@@ -1,6 +1,7 @@
 package com.daniel.budgeplanner.data.sharedpreferences
 
 import android.content.Context
+import com.daniel.budgeplanner.utils.EMPTY_STRING
 import com.daniel.budgeplanner.utils.SHARED_PREFERENCE
 
 class SharedPreferencesImpl(context: Context): AppPreference {
@@ -9,7 +10,7 @@ class SharedPreferencesImpl(context: Context): AppPreference {
     private val  editor = sharedPreferences.edit()
 
     override fun getString(key: String): String? {
-        return sharedPreferences.getString(key, "")
+        return sharedPreferences.getString(key, EMPTY_STRING)
     }
 
     override fun setString(key: String, value: String) {

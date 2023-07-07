@@ -1,8 +1,11 @@
 package com.daniel.budgeplanner.data.room
 
-import androidx.room.*
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.OnConflictStrategy
+import androidx.room.Delete
+import androidx.room.Dao
 import com.daniel.budgeplanner.di.DB_MOVEMENTS
-import com.daniel.budgeplanner.domain.entity.MovementType
 import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.domain.entity.User
 import com.daniel.budgeplanner.repositories.Movements

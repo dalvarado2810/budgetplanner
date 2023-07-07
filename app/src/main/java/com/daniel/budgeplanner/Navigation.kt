@@ -31,5 +31,4 @@ fun Navigation(viewModel: MainViewModel) {
             BudgetDashboard(viewModel = viewModel )
         }
     }
-
 }

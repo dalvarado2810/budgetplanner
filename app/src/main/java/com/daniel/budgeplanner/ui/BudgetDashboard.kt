@@ -13,9 +13,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,9 +32,18 @@ import androidx.compose.ui.text.font.FontWeight
 import com.daniel.budgeplanner.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
-import com.daniel.budgeplanner.ui.composables.*
-import com.daniel.budgeplanner.ui.theme.*
+import com.daniel.budgeplanner.ui.composables.MovementButton
+import com.daniel.budgeplanner.ui.composables.TransactionsTextTitle
+import com.daniel.budgeplanner.ui.composables.BottomSheetOperationDialog
+import com.daniel.budgeplanner.ui.composables.MovementItem
+import com.daniel.budgeplanner.ui.composables.NoMovementsItem
+import com.daniel.budgeplanner.ui.theme.BackGround
+import com.daniel.budgeplanner.ui.theme.CardColor
+import com.daniel.budgeplanner.ui.theme.BudgetGreen
+import com.daniel.budgeplanner.ui.theme.fonts
+import com.daniel.budgeplanner.ui.theme.ExpensesColor
 import com.daniel.budgeplanner.utils.toMovementItem
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -39,6 +55,7 @@ fun BudgetDashboard(
 ) {
     val movementsList by viewModel.monthlyMovements.collectAsState(initial = emptyList())
     val actualBalance by viewModel.actualBalance.collectAsState(initial = 0)
+    val userName = viewModel.getUserName()
     val myColorState = remember {
         mutableStateOf(Color.Black)
     }
@@ -48,6 +65,10 @@ fun BudgetDashboard(
         confirmValueChange = { false },
         skipHalfExpanded = true
     )
+    val listState = rememberLazyListState()
+    val isGoToTopEnabled by remember {
+        derivedStateOf { listState.firstVisibleItemIndex > 0 }
+    }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -76,7 +97,7 @@ fun BudgetDashboard(
             Text(
                 modifier = Modifier
                     .padding(start = 16.dp),
-                text = viewModel.getUserName(),
+                text = userName,
                 color = Color.Black,
                 style = TextStyle(
                     fontSize = 20.sp,
@@ -143,12 +164,34 @@ fun BudgetDashboard(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp)
+                        .height(400.dp),
+                    state = listState
                 ) {
                     items(movementsList) { item ->
                         MovementItem(item = item.toMovementItem())
                     }
                 }
+            }
+
+            TextButton(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+                enabled = isGoToTopEnabled,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.Blue,
+                    disabledContentColor = Color.Gray,
+                    backgroundColor = BackGround,
+                    disabledBackgroundColor = BackGround
+                ),
+                onClick = {
+                    coroutineScope.launch {
+                        listState.animateScrollToItem(0)
+                    }
+                }
+            ){
+                Text(
+                    text = stringResource(id = R.string.go_to_first_movement)
+                )
             }
         }
 
@@ -156,6 +199,7 @@ fun BudgetDashboard(
             sheetState = bottomSheetState,
             sheetContent = {
                 BottomSheetOperationDialog(
+                    user = userName,
                     color = myColorState.value,
                     closeClick = {
                         coroutineScope.launch {
@@ -164,7 +208,7 @@ fun BudgetDashboard(
                     },
                     saveClick = { movement ->
                         coroutineScope.launch {
-                            viewModel.addMovement(movement)
+                            viewModel.setEvent(event = MainContract.Event.AddMovements(movement))
                             bottomSheetState.hide()
                         }
                     }
