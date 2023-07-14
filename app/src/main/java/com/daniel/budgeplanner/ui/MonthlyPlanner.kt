@@ -79,7 +79,7 @@ fun MonthlyPlanner(
     when(viewState.screenState) {
         is MainContract.ScreenState.Success -> {
             showToast(context, (viewState.screenState as MainContract.ScreenState.Success).data)
-            viewModel.setEvent(event = MainContract.Event.setSuccessState)
+            viewModel.setAction(action = MainContract.Action.SetSuccessState)
         }
         is MainContract.ScreenState.initial -> {}
         is MainContract.ScreenState.Loading -> {}
@@ -183,7 +183,7 @@ fun MonthlyPlanner(
                     },
                     saveClick = { movement ->
                         coroutineScope.launch {
-                            viewModel.setEvent(event = MainContract.Event.AddMovements(movement))
+                            viewModel.setAction(action = MainContract.Action.AddMovements(movement))
                             modalBottomSheetState.hide()
                         }
                     }

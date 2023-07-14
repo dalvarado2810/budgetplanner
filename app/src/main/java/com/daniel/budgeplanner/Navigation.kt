@@ -5,7 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.daniel.budgeplanner.ui.BudgetDashboard
-import com.daniel.budgeplanner.ui.GetStarted
+import com.daniel.budgeplanner.ui.routers.GetStartedRouter
+import com.daniel.budgeplanner.ui.ShowUserNameRouter
 import com.daniel.budgeplanner.ui.MonthlyPlanner
 import com.daniel.budgeplanner.ui.Onboarding
 import com.daniel.budgeplanner.utils.ScreensNavigation
@@ -19,7 +20,7 @@ fun Navigation(viewModel: MainViewModel) {
         startDestination = ScreensNavigation.GetStarted.routes
     ) {
         composable(route = ScreensNavigation.GetStarted.routes) {
-            GetStarted(navController = navController,  viewModel = viewModel)
+            GetStartedRouter(navController = navController,  viewModel = viewModel)
         }
         composable(route = ScreensNavigation.OnBoarding.routes) {
             Onboarding(navController = navController, viewModel = viewModel)
@@ -29,6 +30,9 @@ fun Navigation(viewModel: MainViewModel) {
         }
         composable(route = ScreensNavigation.BudgetDashboard.routes){
             BudgetDashboard(viewModel = viewModel )
+        }
+        composable(route = ScreensNavigation.ShowUserName.routes){
+            ShowUserNameRouter(viewModel = viewModel, navController = navController)
         }
     }
 }

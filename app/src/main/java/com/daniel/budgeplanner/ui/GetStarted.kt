@@ -21,19 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.ui.composables.ContinueButton
 import com.daniel.budgeplanner.ui.composables.TopShape
 import com.daniel.budgeplanner.ui.theme.BackGround
 import com.daniel.budgeplanner.utils.IMAGE
-import com.daniel.budgeplanner.utils.ScreensNavigation
 
 @Composable
 fun GetStarted (
-    navController: NavController,
-    viewModel: MainViewModel
+    onClickContinue: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.TopStart,
@@ -92,14 +88,8 @@ fun GetStarted (
                     )
             )
             ContinueButton(text = stringResource(id = R.string.lets_begin)) {
-                navController.navigate(navigateRoute(viewModel))
+                onClickContinue()
             }
         }
     }
-}
-
-private fun navigateRoute(viewModel: MainViewModel): String {
-    return if (viewModel.isUserCreated()) {
-        ScreensNavigation.MonthlyPlanner.routes
-    } else ScreensNavigation.OnBoarding.routes
 }

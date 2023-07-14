@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>: ViewModel() {
+abstract class BaseViewModel<Action: UiAction, State: UiState, Event: UiEvent>: ViewModel() {
 
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
@@ -21,11 +21,11 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>: 
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(initialState)
     val uiState = _uiState.asStateFlow()
 
-    private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
-    val event = _event.asSharedFlow()
+    private val _action: MutableSharedFlow<Action> = MutableSharedFlow()
+    val action = _action.asSharedFlow()
 
-    private val _effect: Channel<Effect> = Channel()
-    val effect = _effect.receiveAsFlow()
+    private val _event: Channel<Event> = Channel()
+    val event = _event.receiveAsFlow()
 
     init {
         subscribeEvents()
@@ -33,17 +33,17 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>: 
 
     private fun subscribeEvents() {
         viewModelScope.launch {
-            event.collect { event->
-                handleEvent(event)
+            action.collect { action->
+                handleAction(action)
             }
         }
     }
 
-    abstract fun handleEvent(event: Event)
+    abstract fun handleAction(action: Action)
 
-    fun setEvent(event : Event) {
-        val newEvent = event
-        viewModelScope.launch { _event.emit(newEvent) }
+    fun setAction(action : Action) {
+        val newAction = action
+        viewModelScope.launch { _action.emit(newAction) }
     }
 
     protected fun setState(reduce: State.() -> State) {
@@ -51,8 +51,8 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>: 
         _uiState.value = newState
     }
 
-    protected fun setEffect(builder: () -> Effect) {
-        val effectValue = builder()
-        viewModelScope.launch { _effect.send(effectValue) }
+    protected fun setEvent(builder: () -> Event) {
+        val eventValue = builder()
+        viewModelScope.launch { _event.send(eventValue) }
     }
 }

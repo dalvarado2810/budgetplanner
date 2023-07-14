@@ -1,17 +1,19 @@
 package com.daniel.budgeplanner
 
-import com.daniel.budgeplanner.base.UiEffect
 import com.daniel.budgeplanner.base.UiEvent
+import com.daniel.budgeplanner.base.UiAction
 import com.daniel.budgeplanner.base.UiState
 import com.daniel.budgeplanner.domain.entity.Movement
 
 class MainContract {
 
-    sealed class Event: UiEvent {
-        data class AddName(val name: String): Event()
-        data class AddMovements(val movement: Movement): Event()
-        object setSuccessState: Event()
-        object ObtainAllMovements: Event()
+    sealed class Action: UiAction {
+        data class AddName(val name: String): Action()
+        data class AddMovements(val movement: Movement): Action()
+        object SetSuccessState: Action()
+        object ObtainUserName: Action()
+
+        data class ChangeName(val name: String): Action()
     }
 
     data class State(
@@ -25,8 +27,10 @@ class MainContract {
         data class Success(val data: String): ScreenState()
     }
 
-    sealed class Effect: UiEffect {
-        object ShowError: Effect()
-        object ShowWarning: Effect()
+    sealed class Event: UiEvent {
+        object ShowError: Event()
+        object ShowWarning: Event()
+
+        data class SetNewName(val name: String): Event()
     }
 }

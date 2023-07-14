@@ -136,7 +136,7 @@ fun Onboarding(
             )
 
             ContinueButton(text = stringResource(id = R.string.lets_go)) {
-                viewModel.setEvent(MainContract.Event.AddName(name))
+                viewModel.setAction(MainContract.Action.AddName(name))
                 navController.navigate(ScreensNavigation.MonthlyPlanner.routes)
             }
         }

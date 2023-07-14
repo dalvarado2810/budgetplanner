@@ -15,7 +15,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.Text
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Card
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.Composable
@@ -208,7 +215,7 @@ fun BudgetDashboard(
                     },
                     saveClick = { movement ->
                         coroutineScope.launch {
-                            viewModel.setEvent(event = MainContract.Event.AddMovements(movement))
+                            viewModel.setAction(action = MainContract.Action.AddMovements(movement))
                             bottomSheetState.hide()
                         }
                     }

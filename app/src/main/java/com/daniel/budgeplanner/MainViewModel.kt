@@ -13,16 +13,15 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val context: Application,
     private val repository: MovementRepository,
     private val sharedPreferences: AppPreference
 ) : BaseViewModel<
-            MainContract.Event,
+            MainContract.Action,
             MainContract.State,
-            MainContract.Effect
+            MainContract.Event
             >() {
 
     val monthlyMovements = repository.getMovements(getMonth())
@@ -40,28 +39,35 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    override fun handleEvent(event: MainContract.Event) {
-        when(event) {
-            is MainContract.Event.AddMovements -> {
-                addMovement(event.movement)
+    override fun handleAction(action: MainContract.Action) {
+        when(action) {
+            is MainContract.Action.AddMovements -> {
+                addMovement(action.movement)
                 setState {
                     copy( screenState =
                     MainContract.ScreenState.Success(
                         context.getString(R.string.movement_saved)))
                 }
             }
-            is MainContract.Event.AddName -> {
-                sharedPreferences.setString(USER_NAME, event.name)
+            is MainContract.Action.AddName -> {
+                sharedPreferences.setString(USER_NAME, action.name)
             }
-            is MainContract.Event.ObtainAllMovements -> { }
-            is MainContract.Event.setSuccessState -> {
+            is MainContract.Action.ObtainUserName -> {
+                setUserNameState()
+            }
+            is MainContract.Action.SetSuccessState -> {
                 setState {
                     copy( screenState =
                     MainContract.ScreenState.initial)
                 }
             }
+            is MainContract.Action.ChangeName -> {
+                setEvent { MainContract.Event.SetNewName(getUserName()) }
+            }
         }
     }
+
+
 
     private fun getMonth(): Int {
         val calendar = Calendar.getInstance()
@@ -71,4 +77,15 @@ class MainViewModel @Inject constructor(
     fun isUserCreated(): Boolean = sharedPreferences.getString(USER_NAME) != EMPTY_STRING
 
     fun getUserName(): String = sharedPreferences.getString(USER_NAME) ?: EMPTY_STRING
+
+    fun setUserNameState() {
+        setState {
+            copy(
+                screenState =
+                MainContract.ScreenState.Success(
+                    "Haga click para ver el nombre"
+                )
+            )
+        }
+    }
 }
