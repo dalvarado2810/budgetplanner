@@ -30,8 +30,8 @@ interface MovementsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMovement(movement: Movement)
 
-    @Query("SELECT * FROM $DB_MOVEMENTS WHERE month = :month")
-    fun getAllMonthlyMovements(month: Int): Flow<Movements>
+    @Query("SELECT * FROM $DB_MOVEMENTS WHERE date BETWEEN :startDate AND :endDate" )
+    fun getAllMonthlyMovements(startDate: String, endDate: String): Flow<Movements>
 
     @Delete
     suspend fun deleteMovement(movement: Movement)

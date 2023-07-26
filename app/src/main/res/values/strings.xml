@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Get Started-->
-    <string name="app_name">budgeplanner</string>
+    <string name="app_name">Monitor de Gastos</string>
     <string name="your_budget">Tu Presupuesto</string>
     <string name="regulate_expenses">Ajusta tus gastos mensuales</string>
     <string name="we_can_help">Te ayudamos a planificar tus gastos mensuales</string>
@@ -37,6 +37,8 @@
     <string name="outcomes">Gastos</string>
     <string name="hello">Hola, </string>
     <string name="your_balance">Tu Balance</string>
+    <string name="ant_balance">Gastos Hormiga</string>
+    <string name="food_balance">Gastos Alimentación</string>
     <string name="money_sign">$  </string>
     <string name="movement_saved">Movimiento guardado</string>
     <string name="go_to_first_movement">Ir al primer movimiento</string>

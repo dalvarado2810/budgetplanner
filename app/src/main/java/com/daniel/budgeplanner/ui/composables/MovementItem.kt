@@ -28,6 +28,7 @@ import com.daniel.budgeplanner.data.MovementItem
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.ui.theme.CardColor
 import com.daniel.budgeplanner.ui.theme.ExpensesColor
+import com.daniel.budgeplanner.utils.toNumberFormat
 
 @Composable
 fun MovementItem(
@@ -122,7 +123,7 @@ fun AmountTextView(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = stringResource(id = R.string.item_amount, item.amount),
+            text = stringResource(id = R.string.item_amount, item.amount.toInt().toNumberFormat()),
             style = TextStyle(
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold

@@ -8,9 +8,9 @@ import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.repositories.MovementRepository
 import com.daniel.budgeplanner.utils.EMPTY_STRING
 import com.daniel.budgeplanner.utils.USER_NAME
+import com.daniel.budgeplanner.utils.getDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,8 +24,10 @@ class MainViewModel @Inject constructor(
             MainContract.Event
             >() {
 
-    val monthlyMovements = repository.getMovements(getMonth())
-    val actualBalance = repository.getActualBalance(getMonth())
+    val monthlyMovements = repository.getMovements(getDate().first, getDate().second)
+    val actualBalance = repository.getActualBalance(getDate().first, getDate().second)
+    val antExpensesBalance = repository.getAntExpenses(getDate().first, getDate().second)
+    val foodExpensesBalance = repository.getFoodExpenses(getDate().first, getDate().second)
 
     override fun createInitialState(): MainContract.State {
         return MainContract.State(
@@ -67,23 +69,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-
-    private fun getMonth(): Int {
-        val calendar = Calendar.getInstance()
-        return calendar.get(Calendar.MONTH) + 1
-    }
-
-    fun isUserCreated(): Boolean = sharedPreferences.getString(USER_NAME) != EMPTY_STRING
-
     fun getUserName(): String = sharedPreferences.getString(USER_NAME) ?: EMPTY_STRING
 
-    fun setUserNameState() {
+    private fun setUserNameState() {
         setState {
             copy(
                 screenState =
                 MainContract.ScreenState.Success(
-                    "Haga click para ver el nombre"
+                    getUserName()
                 )
             )
         }

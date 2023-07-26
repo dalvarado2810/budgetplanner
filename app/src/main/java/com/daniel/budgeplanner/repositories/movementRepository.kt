@@ -7,9 +7,13 @@ typealias Movements = List<Movement>
 
 interface MovementRepository {
 
-    fun getMovements(month: Int): Flow<Movements>
+    fun getMovements(startDate: String, endDate: String): Flow<Movements>
 
-    fun getActualBalance(month: Int): Flow<Int>
+    fun getActualBalance(startDate: String, endDate: String): Flow<Int>
+
+    fun getAntExpenses(startDate: String, endDate: String): Flow<Int>
+
+    fun getFoodExpenses(startDate: String, endDate: String): Flow<Int>
 
     suspend fun addMovementToDb(movement: Movement)
 

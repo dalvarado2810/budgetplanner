@@ -62,6 +62,8 @@ fun BudgetDashboard(
 ) {
     val movementsList by viewModel.monthlyMovements.collectAsState(initial = emptyList())
     val actualBalance by viewModel.actualBalance.collectAsState(initial = 0)
+    val antExpensesBalance by viewModel.antExpensesBalance.collectAsState(initial = 0)
+    val foodExpensesBalance by viewModel.foodExpensesBalance.collectAsState(initial = 0)
     val userName = viewModel.getUserName()
     val myColorState = remember {
         mutableStateOf(Color.Black)
@@ -83,7 +85,7 @@ fun BudgetDashboard(
     ) {
         Card(modifier = Modifier
             .fillMaxWidth()
-            .height(228.dp),
+            .height(232.dp),
             shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp),
             backgroundColor = BudgetGreen,
             elevation = 8.dp
@@ -91,29 +93,31 @@ fun BudgetDashboard(
 
         Column{
 
-            Text(
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 16.dp),
-                text = stringResource(id = R.string.hello),
-                color = Color.Black,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light)
-            )
+            Row {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 16.dp, top = 16.dp),
+                    text = stringResource(id = R.string.hello),
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Light)
+                )
+
+                Text(
+                    modifier = Modifier
+                        .padding(start = 4.dp, top = 10.dp),
+                    text = userName,
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold)
+                )
+            }
 
             Text(
                 modifier = Modifier
-                    .padding(start = 16.dp),
-                text = userName,
-                color = Color.Black,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold)
-            )
-
-            Text(
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 12.dp),
+                    .padding(start = 16.dp, top = 6.dp),
                 text = stringResource(id = R.string.your_balance),
                 color = Color.Black,
                 style = TextStyle(
@@ -131,14 +135,70 @@ fun BudgetDashboard(
                     fontSize = 38.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = fonts),
-
             )
+
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(
+                    start = 58.dp)
+            ){
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text(
+                        text = stringResource(id = R.string.food_balance),
+                        color = Color.Black,
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold)
+                    )
+
+                    Text(
+                        modifier = Modifier,
+                        text = toFormattedAmount(foodExpensesBalance),
+                        color = setActualBalanceColor(foodExpensesBalance),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fonts),
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier
+                        .width(58.dp)
+                )
+
+                Column (
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.ant_balance),
+                        color = Color.Black,
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold)
+                    )
+
+                    Text(
+                        modifier = Modifier,
+                        text = toFormattedAmount(antExpensesBalance),
+                        color = setActualBalanceColor(antExpensesBalance),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fonts),
+                    )
+                }
+            }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(
-                    start = 82.dp,
+                    start = 66.dp,
                     top = 5.dp)
             ) {
                 MovementButton(
@@ -151,7 +211,7 @@ fun BudgetDashboard(
 
                 Spacer(
                     modifier = Modifier
-                        .width(32.dp)
+                        .width(68.dp)
                 )
 
                 MovementButton(
@@ -171,7 +231,7 @@ fun BudgetDashboard(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(400.dp),
+                        .height(380.dp),
                     state = listState
                 ) {
                     items(movementsList) { item ->
@@ -234,5 +294,6 @@ fun setActualBalanceColor(actualBalance: Int): Color {
 
 fun toFormattedAmount(amount: Int): String {
     val numberFormat = NumberFormat.getCurrencyInstance()
+    numberFormat.maximumFractionDigits = 0
     return numberFormat.format(amount)
 }

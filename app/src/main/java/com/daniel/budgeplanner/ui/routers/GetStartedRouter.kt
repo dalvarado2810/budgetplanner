@@ -1,6 +1,7 @@
 package com.daniel.budgeplanner.ui.routers
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -9,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
+import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.ui.GetStarted
 import com.daniel.budgeplanner.ui.composables.LoadingAnimation
 import com.daniel.budgeplanner.utils.ScreensNavigation
@@ -20,6 +22,7 @@ fun GetStartedRouter(
     viewModel: MainViewModel
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val itemList by viewModel.monthlyMovements.collectAsState(initial = emptyList())
     val nameState by produceState<MainContract.ScreenState>(
         initialValue = MainContract.ScreenState.Loading,
         key1 = lifecycle,
@@ -37,14 +40,21 @@ fun GetStartedRouter(
             MainContract.ScreenState.initial -> LoadingAnimation()
         is MainContract.ScreenState.Success -> GetStarted {
             navController.navigate(
-                navigateRoute((nameState as MainContract.ScreenState.Success).data))
+                navigateRoute(
+                    (nameState as MainContract.ScreenState.Success).data,
+                    itemList
+                )
+            )
         }
         is MainContract.ScreenState.error -> {}
     }
 }
 
-private fun navigateRoute(name: String): String {
-    return if (name.isNotEmpty()) {
-        ScreensNavigation.ShowUserName.routes
-    } else ScreensNavigation.OnBoarding.routes
+private fun navigateRoute(name: String, list: List<Movement>): String {
+    return when {
+        (name.isNotEmpty() && list.isEmpty()) -> ScreensNavigation.MonthlyPlanner.routes
+        (name.isNotEmpty() && list.isNotEmpty()) -> ScreensNavigation.BudgetDashboard.routes
+        else -> ScreensNavigation.OnBoarding.routes
+    }
 }
+
