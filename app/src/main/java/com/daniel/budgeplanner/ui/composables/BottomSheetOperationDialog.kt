@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.Surface
@@ -33,18 +34,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.domain.entity.MovementType
+import com.daniel.budgeplanner.ui.showToast
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.utils.MONTHLY_INCOMES
 import com.daniel.budgeplanner.utils.OTHER_INCOMES
@@ -54,6 +60,7 @@ import com.daniel.budgeplanner.utils.SERVICES_EXPENSES
 import com.daniel.budgeplanner.utils.EMPTY_STRING
 import com.daniel.budgeplanner.utils.ICON
 import com.daniel.budgeplanner.utils.toCategoryItem
+import com.daniel.budgeplanner.utils.toViewPattern
 import java.time.LocalDate
 
 @Composable
@@ -64,6 +71,8 @@ fun BottomSheetOperationDialog(
     closeClick: () -> Unit
 ) {
 
+    val context = LocalContext.current
+    val toastMessage = stringResource(id = R.string.add_movement_amount)
     val title = if (color == BudgetGreen) stringResource(id = R.string.income)
             else stringResource(id = R.string.outcome)
     val categories = if (color == BudgetGreen) {
@@ -86,6 +95,7 @@ fun BottomSheetOperationDialog(
     }
 
     val isChecked = remember { mutableStateOf(false) }
+    val buttonEnabled = remember { mutableStateOf(false) }
     val colorCheck = remember { mutableStateOf(Color.Gray) }
     val showDatePicker = remember { mutableStateOf(false) }
     val dateSelected = remember { mutableStateOf(LocalDate.now()) }
@@ -181,7 +191,8 @@ fun BottomSheetOperationDialog(
             TextField(
                 value = amountText,
                 onValueChange = {
-                    if (it.text.length <= 26) amountText = it },
+                    if (it.text.length <= 26 &&
+                        it.text.isDigitsOnly())  amountText = it },
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = Color.Black,
@@ -200,7 +211,11 @@ fun BottomSheetOperationDialog(
                         painter = painterResource(id = R.drawable.dollar),
                         contentDescription = ICON
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.NumberPassword
+                ),
+                visualTransformation = VisualTransformation.None
             )
         }
 
@@ -232,7 +247,7 @@ fun BottomSheetOperationDialog(
                 modifier = Modifier.padding(end = 6.dp),
                 alignment = Alignment.Center
             )
-            Text(text = stringResource(id = R.string.date))
+            Text(text = dateSelected.value.toViewPattern())
         }
 
         DialogText(
@@ -273,11 +288,20 @@ fun BottomSheetOperationDialog(
             )
         }
 
-        ContinueButton(text = stringResource(id = R.string.save_movement), color = color) {
+        buttonEnabled.value = descriptionText.text.isNotEmpty() &&
+                amountText.text.isNotEmpty() &&
+                categorySelected.value.isNotEmpty()
+
+        ContinueButton(
+            text = stringResource(id = R.string.save_movement),
+            color = color,
+            enabled = buttonEnabled.value
+        ) {
+            val amount = amountText.text.toInt()
             val movement = Movement(
                 id = 0,
                 movementDescription = descriptionText.text,
-                movementAmount = amountText.text.toInt(),
+                movementAmount = amount,
                 movementType = if (color == BudgetGreen) MovementType.INCOME else MovementType.EXPENSE,
                 movementUser = user,
                 month = dateSelected.value.monthValue,
@@ -290,7 +314,11 @@ fun BottomSheetOperationDialog(
             categorySelected.value = EMPTY_STRING
             isChecked.value = false
             colorCheck.value = Color.Gray
-            saveClick(movement)
+            if (amount != 0) {
+                saveClick(movement)
+            } else {
+                showToast(context, toastMessage)
+            }
         }
     }
 }

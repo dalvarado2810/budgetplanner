@@ -7,6 +7,7 @@ import java.text.NumberFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.TimeZone
 
 private const val END_DAY = 23
@@ -54,3 +55,5 @@ fun convertMillisToDate(millis: Long):LocalDate {
             TimeZone.getDefault().toZoneId())
     return localDate.plusDays(1L).toLocalDate()
 }
+
+fun LocalDate.toViewPattern(): String = format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))

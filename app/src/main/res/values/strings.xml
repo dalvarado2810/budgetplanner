@@ -54,6 +54,7 @@
     <string name="save_movement">Guardar</string>
     <string name="item_amount">$ %1$s</string>
     <string name="no_movements_add">No tienes transacciones agregadas</string>
+    <string name="add_movement_amount">Debes agregar un monto superior a CERO</string>
     <string name="last_transactions">Ultimas transacciones</string>
 
 </resources>

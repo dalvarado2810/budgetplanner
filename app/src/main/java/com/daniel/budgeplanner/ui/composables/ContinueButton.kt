@@ -21,6 +21,7 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 fun ContinueButton(
     text: String,
     color: Color = BudgetGreen,
+    enabled: Boolean = true,
     onButtonClick: () -> Unit
 ) {
     Button(
@@ -39,7 +40,8 @@ fun ContinueButton(
         contentPadding = PaddingValues(
             start = 32.dp,
             end = 32.dp
-        )
+        ),
+        enabled = enabled
     ) {
         Text(
             text = text,
