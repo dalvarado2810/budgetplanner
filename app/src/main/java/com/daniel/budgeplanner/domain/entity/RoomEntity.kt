@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.daniel.budgeplanner.data.Category
 import com.daniel.budgeplanner.di.DB_MOVEMENTS
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Entity(tableName = "DB_USERS")
 data class User(
@@ -23,10 +25,13 @@ data class Movement(
     val movementType: MovementType,
     val movementUser: String,
     val movementCategory: Category,
-    val date: String,
+    val date: LocalDate,
     val month: Int,
     val year: Int
-)
+) {
+    fun obtainDateFormatted(): String = date
+        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+}
 
 enum class MovementType {
     INCOME,

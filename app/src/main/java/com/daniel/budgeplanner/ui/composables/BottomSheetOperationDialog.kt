@@ -1,25 +1,30 @@
 package com.daniel.budgeplanner.ui.composables
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.Surface
 import androidx.compose.material.IconButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Card
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,8 +55,6 @@ import com.daniel.budgeplanner.utils.EMPTY_STRING
 import com.daniel.budgeplanner.utils.ICON
 import com.daniel.budgeplanner.utils.toCategoryItem
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
 
 @Composable
 fun BottomSheetOperationDialog(
@@ -84,10 +87,12 @@ fun BottomSheetOperationDialog(
 
     val isChecked = remember { mutableStateOf(false) }
     val colorCheck = remember { mutableStateOf(Color.Gray) }
+    val showDatePicker = remember { mutableStateOf(false) }
+    val dateSelected = remember { mutableStateOf(LocalDate.now()) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
         modifier = Modifier
             .padding(bottom = 12.dp)
     ) {
@@ -111,25 +116,32 @@ fun BottomSheetOperationDialog(
             )
         }
 
-        IconButton(
-            onClick = {
-                closeClick()
-                categorySelected.value = EMPTY_STRING
-                      },
-            modifier = Modifier
-                .align(Alignment.End)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = ICON,
-                tint = Color.Black,
+            DialogText(
+                text = stringResource(id = R.string.description),
+                size = 18
             )
+            Spacer(modifier = Modifier.width(32.dp))
+            IconButton(
+                onClick = {
+                    closeClick()
+                    categorySelected.value = EMPTY_STRING
+                },
+                modifier = Modifier
+                    .padding(start = 64.dp)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = ICON,
+                    tint = Color.Black,
+                )
+            }
         }
-
-        DialogText(
-            text = stringResource(id = R.string.description),
-            size = 18
-        )
 
         Card(
             shape = RoundedCornerShape(24.dp),
@@ -192,50 +204,86 @@ fun BottomSheetOperationDialog(
             )
         }
 
+        Button (
+            onClick = { showDatePicker.value = true },
+            elevation = androidx.compose.material.ButtonDefaults.elevation(
+                defaultElevation = 2.dp
+            ),
+            shape = RoundedCornerShape(corner = CornerSize(48.dp)),
+            colors = androidx.compose.material.ButtonDefaults.buttonColors(
+                backgroundColor = color,
+                contentColor = Color.Black
+            ),
+            modifier = Modifier
+                .width(width = 155.dp)
+                .height(height = 40.dp)
+                .padding(top = 4.dp, bottom = 4.dp),
+            contentPadding = PaddingValues(
+                top = 4.dp,
+                start = 12.dp,
+                end = 12.dp
+            )
+        ) {
+            Image(
+                painter = painterResource(
+                    id = R.drawable.baseline_date_range_24
+                ),
+                contentDescription = ICON,
+                modifier = Modifier.padding(end = 6.dp),
+                alignment = Alignment.Center
+            )
+            Text(text = stringResource(id = R.string.date))
+        }
+
         DialogText(
             text = stringResource(id = R.string.category),
             size = 18
         )
 
-        Column(horizontalAlignment = Alignment.Start) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    categories.forEach { item ->
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = categorySelected.value == item,
-                                onCheckedChange = {
-                                    category = item.toCategoryItem()
-                                    if (categorySelected.value != item) {
-                                        categorySelected.value = item
-                                    }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            categories.forEach { item ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = categorySelected.value == item,
+                        onCheckedChange = {
+                            category = item.toCategoryItem()
+                            if (categorySelected.value != item) {
+                                categorySelected.value = item
+                            }
 
-                                },
-                                colors = CheckboxDefaults.colors(
-                                    checkedColor = BudgetGreen,
-                                    uncheckedColor = Color.Gray
-                                )
-                            )
-                            Text(text = item)
-                        }
-                    }
+                        },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = color,
+                            uncheckedColor = Color.Gray
+                        )
+                    )
+                    Text(text = item)
                 }
             }
         }
 
-        ContinueButton(text = stringResource(id = R.string.save_movement)) {
+        if (showDatePicker.value) {
+            MyDatePickerDialog(
+                onDateSelected = { dateSelected.value = it }, {
+                    showDatePicker.value = false
+                }
+            )
+        }
+
+        ContinueButton(text = stringResource(id = R.string.save_movement), color = color) {
             val movement = Movement(
                 id = 0,
                 movementDescription = descriptionText.text,
                 movementAmount = amountText.text.toInt(),
                 movementType = if (color == BudgetGreen) MovementType.INCOME else MovementType.EXPENSE,
                 movementUser = user,
-                month = 7,
-                year = 2023,
+                month = dateSelected.value.monthValue,
+                year = dateSelected.value.year,
                 movementCategory = category,
-                date = obtainActualDate()
+                date = dateSelected.value
             )
             descriptionText = TextFieldValue(EMPTY_STRING)
             amountText = TextFieldValue(EMPTY_STRING)
@@ -246,17 +294,3 @@ fun BottomSheetOperationDialog(
         }
     }
 }
-
-private fun obtainActualDate(): String {
-    val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH) + 1
-    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
-    return dateTimeFormatter.format(LocalDate.of(year, month, dayOfMonth))
-}
-
-
-
-

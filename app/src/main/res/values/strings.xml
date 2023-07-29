@@ -45,6 +45,8 @@
 
     <!-- Composables-->
     <string name="income">INGRESO</string>
+    <string name="date">Fecha</string>
+    <string name="select_date">Selecciona la fecha</string>
     <string name="outcome">GASTO</string>
     <string name="description">Descripción</string>
     <string name="amount">Monto</string>

@@ -96,7 +96,7 @@ fun MovementItem(
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Medium
                     ),
-                    modifier = Modifier.padding( top = 6.dp)
+                    modifier = Modifier.padding( top = 2.dp)
                 )
             }
 

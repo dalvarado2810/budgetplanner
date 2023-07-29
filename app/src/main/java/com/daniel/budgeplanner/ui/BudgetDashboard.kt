@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
+import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.ui.composables.MovementButton
 import com.daniel.budgeplanner.ui.composables.TransactionsTextTitle
 import com.daniel.budgeplanner.ui.composables.BottomSheetOperationDialog
@@ -78,6 +79,7 @@ fun BudgetDashboard(
     val isGoToTopEnabled by remember {
         derivedStateOf { listState.firstVisibleItemIndex > 0 }
     }
+    val comparator = Comparator<Movement> { a, b -> a.date.compareTo(b.date) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -234,7 +236,7 @@ fun BudgetDashboard(
                         .height(380.dp),
                     state = listState
                 ) {
-                    items(movementsList) { item ->
+                    items(movementsList.sortedWith(comparator)) { item ->
                         MovementItem(item = item.toMovementItem())
                     }
                 }

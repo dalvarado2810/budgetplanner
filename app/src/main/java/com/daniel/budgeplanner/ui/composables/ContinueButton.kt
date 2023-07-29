@@ -20,6 +20,7 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 @Composable
 fun ContinueButton(
     text: String,
+    color: Color = BudgetGreen,
     onButtonClick: () -> Unit
 ) {
     Button(
@@ -29,7 +30,7 @@ fun ContinueButton(
         ),
         shape = RoundedCornerShape(corner = CornerSize(8.dp)),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = BudgetGreen,
+            backgroundColor = color,
             contentColor = Color.Black
         ),
         modifier = Modifier
