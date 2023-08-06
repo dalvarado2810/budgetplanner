@@ -7,10 +7,13 @@ import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.repositories.MovementRepository
 import com.daniel.budgeplanner.utils.EMPTY_STRING
+import com.daniel.budgeplanner.utils.END_DATE
+import com.daniel.budgeplanner.utils.START_DATE
 import com.daniel.budgeplanner.utils.USER_NAME
 import com.daniel.budgeplanner.utils.getDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,15 +22,16 @@ class MainViewModel @Inject constructor(
     private val repository: MovementRepository,
     private val sharedPreferences: AppPreference
 ) : BaseViewModel<
-            MainContract.Action,
-            MainContract.State,
-            MainContract.Event
-            >() {
+        MainContract.Action,
+        MainContract.State,
+        MainContract.Event
+        >(
+) {
 
-    val monthlyMovements = repository.getMovements(getDate().first, getDate().second)
-    val actualBalance = repository.getActualBalance(getDate().first, getDate().second)
-    val antExpensesBalance = repository.getAntExpenses(getDate().first, getDate().second)
-    val foodExpensesBalance = repository.getFoodExpenses(getDate().first, getDate().second)
+    val monthlyMovements = repository.getMovements(getRangeOfDates().first,getRangeOfDates().second)
+    val actualBalance = repository.getActualBalance(getRangeOfDates().first,getRangeOfDates().second)
+    val antExpensesBalance = repository.getAntExpenses(getRangeOfDates().first,getRangeOfDates().second)
+    val foodExpensesBalance = repository.getFoodExpenses(getRangeOfDates().first,getRangeOfDates().second)
 
     override fun createInitialState(): MainContract.State {
         return MainContract.State(
@@ -66,6 +70,11 @@ class MainViewModel @Inject constructor(
             is MainContract.Action.ChangeName -> {
                 setEvent { MainContract.Event.SetNewName(getUserName()) }
             }
+            is MainContract.Action.SetRangeDate -> {
+                setPeriodRangeDates(
+                    startDate = action.startDate,
+                    endDate = action.endDate)
+            }
         }
     }
 
@@ -79,6 +88,30 @@ class MainViewModel @Inject constructor(
                     getUserName()
                 )
             )
+        }
+    }
+
+    private fun setPeriodRangeDates(
+        startDate: LocalDate?,
+        endDate: LocalDate?
+    ){
+        sharedPreferences.setString(START_DATE, startDate.toString())
+        sharedPreferences.setString(END_DATE, endDate.toString())
+        setState {
+            copy( screenState =
+            MainContract.ScreenState.error)
+        }
+    }
+
+    private fun getRangeOfDates(): Pair<String, String> {
+        val isMonthlyPeriodSet = sharedPreferences.getString(START_DATE) != null &&
+                sharedPreferences.getString(END_DATE) != null
+        return if (isMonthlyPeriodSet) {
+            Pair(sharedPreferences.getString(START_DATE) ?: "",
+                sharedPreferences.getString(END_DATE) ?: "")
+        } else {
+            Pair(getDate().first,
+                getDate().second)
         }
     }
 }

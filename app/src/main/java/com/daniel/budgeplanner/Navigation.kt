@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.daniel.budgeplanner.ui.BudgetDashboard
 import com.daniel.budgeplanner.ui.routers.GetStartedRouter
-import com.daniel.budgeplanner.ui.ShowUserNameRouter
+import com.daniel.budgeplanner.ui.routers.ShowUserNameRouter
 import com.daniel.budgeplanner.ui.MonthlyPlanner
 import com.daniel.budgeplanner.ui.Onboarding
 import com.daniel.budgeplanner.utils.ScreensNavigation

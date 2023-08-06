@@ -2,10 +2,10 @@ package com.daniel.budgeplanner.data.sharedpreferences
 
 interface AppPreference {
 
-    fun getString(key:String):String ?
+    fun getString(key:String):String?
     fun setString(key:String,value:String)
 
-    fun getBoolean(key:String):Boolean ?
+    fun getBoolean(key:String):Boolean?
     fun setBoolean(key:String,value:Boolean)
 
     fun removeValue()

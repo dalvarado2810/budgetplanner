@@ -56,5 +56,6 @@
     <string name="no_movements_add">No tienes transacciones agregadas</string>
     <string name="add_movement_amount">Debes agregar un monto superior a CERO</string>
     <string name="last_transactions">Ultimas transacciones</string>
+    <string name="select_range_of_date">Seleccion período a calcular</string>
 
 </resources>

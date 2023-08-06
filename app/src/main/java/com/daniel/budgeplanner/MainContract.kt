@@ -4,6 +4,7 @@ import com.daniel.budgeplanner.base.UiEvent
 import com.daniel.budgeplanner.base.UiAction
 import com.daniel.budgeplanner.base.UiState
 import com.daniel.budgeplanner.domain.entity.Movement
+import java.time.LocalDate
 
 class MainContract {
 
@@ -14,6 +15,11 @@ class MainContract {
         object ObtainUserName: Action()
 
         data class ChangeName(val name: String): Action()
+
+        data class SetRangeDate(
+            val startDate: LocalDate?,
+            val endDate: LocalDate?
+        ): Action()
     }
 
     data class State(

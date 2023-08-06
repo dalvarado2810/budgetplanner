@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,15 +24,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgeplanner.R
+import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.ui.composables.ContinueButton
+import com.daniel.budgeplanner.ui.composables.MyDateRangePickerDialog
 import com.daniel.budgeplanner.ui.composables.TopShape
 import com.daniel.budgeplanner.ui.theme.BackGround
 import com.daniel.budgeplanner.utils.IMAGE
+import java.time.LocalDate
 
 @Composable
 fun GetStarted (
-    onClickContinue: () -> Unit
+    onClickContinue: () -> Unit,
+    dateSelectionAction: (LocalDate?, LocalDate?) -> Unit
 ) {
+    val showDatePicker = remember { mutableStateOf(false) }
+
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -43,7 +51,9 @@ fun GetStarted (
                 .fillMaxWidth()
         ) {
 
-            TopShape()
+            TopShape(buttonVisible = true) {
+                showDatePicker.value = true
+            }
             Text(
                 text = stringResource(id = R.string.your_budget),
                 color = Color.Black,
@@ -72,6 +82,17 @@ fun GetStarted (
                     fontSize = 22.sp
                 )
             )
+
+            if(showDatePicker.value){
+                MyDateRangePickerDialog(
+                    onRangeDatesSelected = { star, end ->
+                        dateSelectionAction(star, end)
+                    },
+                    onDismiss = {
+                        showDatePicker.value = false
+                    }
+                )
+            }
 
             Text(
                 text = stringResource(id = R.string.we_can_help),

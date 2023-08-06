@@ -61,7 +61,7 @@ fun Onboarding(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            TopShape(stringResource(id = R.string.set_your_budget))
+            TopShape(stringResource(id = R.string.set_your_budget)) {}
 
             InputTextField(title = stringResource(id = R.string.give_us_your_name)) {
                 name = it

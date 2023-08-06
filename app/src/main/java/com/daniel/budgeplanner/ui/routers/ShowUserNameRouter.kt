@@ -1,4 +1,4 @@
-package com.daniel.budgeplanner.ui
+package com.daniel.budgeplanner.ui.routers
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
