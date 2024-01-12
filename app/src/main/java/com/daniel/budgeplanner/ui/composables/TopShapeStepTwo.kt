@@ -35,26 +35,17 @@ import com.daniel.budgeplanner.ui.theme.OnboardingBackground
 import com.daniel.budgeplanner.utils.EMPTY_STRING
 import com.daniel.budgeplanner.utils.ICON
 import com.daniel.budgeplanner.utils.IMAGE
-import com.daniel.budgeplanner.utils.STEP_ONE
-import com.daniel.budgeplanner.utils.STEP_THREE
-import com.daniel.budgeplanner.utils.STEP_TWO
 
 @Composable
-fun TopShape(
+fun TopShapeStepTwo(
     title: String = EMPTY_STRING,
-    step: Int? = null,
+    image: Int? = null,
     isOnboarding: Boolean = false,
     buttonVisible: Boolean = false,
     onClick: () -> Unit
 ) {
     val backGround = if (isOnboarding) OnboardingBackground else BackGround
     val moneyTopImg = if (isOnboarding) R.drawable.money_top else R.drawable.splash
-    val image = when(step){
-        STEP_ONE -> R.drawable.money_card
-        STEP_TWO -> R.drawable.categories_top_image
-        STEP_THREE -> R.drawable.secure_info
-        else -> null
-    }
 
     Box(
         modifier = Modifier
@@ -69,21 +60,14 @@ fun TopShape(
                 .height(height = 172.dp),
         )
         if (image !=  null) {
-            when (step){
-                STEP_ONE -> {
-                    ImageSteps(image = image, pt = 120.dp, pb = 0.dp, width = 360.dp , height = 345.dp)
-                }
-                STEP_TWO -> {
-                    ImageSteps(image = image, pt = 30.dp, pb =  25.dp, width = 360.dp, height = 363.dp)
-                }
-                STEP_THREE -> {
-                    ImageSteps(image = image, pt = 0.dp, pb =  0.dp, width = 447.dp, height = 428.dp)
-                }
-                else -> {
-
-                }
-            }
-
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = IMAGE,
+                modifier = Modifier
+                    .padding(top = 30.dp, start = 20.dp, bottom = 25.dp)
+                    .width(width = 360.dp)
+                    .height(height = 363.dp)
+            )
         }
         Text(
             text = title,

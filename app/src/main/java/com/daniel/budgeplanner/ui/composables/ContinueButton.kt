@@ -38,6 +38,7 @@ fun ContinueButton(
             .width(width = 325.dp)
             .height(height = 60.dp),
         contentPadding = PaddingValues(
+            top = 16.dp,
             start = 32.dp,
             end = 32.dp
         ),

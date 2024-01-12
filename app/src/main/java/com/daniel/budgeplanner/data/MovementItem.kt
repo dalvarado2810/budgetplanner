@@ -14,3 +14,9 @@ enum class Category(val gasto: String) {
     MONTHLY_INCOMES("Ingresos Mensuales"),
     OTHER_INCOMES("Ingresos varios")
 }
+
+enum class Steps(val step: Int){
+    STEP_ONE(1),
+    STEP_TWO(2),
+    STEP_THREE(3)
+}

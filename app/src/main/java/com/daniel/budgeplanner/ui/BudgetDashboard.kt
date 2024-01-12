@@ -233,7 +233,7 @@ fun BudgetDashboard(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(380.dp),
+                        .height(420.dp),
                     state = listState
                 ) {
                     items(movementsList.sortedWith(comparator)) { item ->

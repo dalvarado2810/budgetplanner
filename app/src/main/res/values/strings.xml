@@ -9,9 +9,17 @@
 
     <!-- Onboarding-->
 
-    <string name="set_your_budget">Configuremos tu presupuesto</string>
-    <string name="give_us_your_name">Danos tu nombre</string>
-    <string name="add_operations">  Tenemos gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personalizadas para ti.</string>
+    <string name="onboarding_step_one_title">Ajusta tus gastos mensuales</string>
+    <string name="onboarding_step_one_subtitle">Con esta app podrias planificar tus finanzas mensuales y llevar control sobre las mismas.</string>
+    <string name="onboarding_step_two_title">Agrupa tus ingresos y gastos</string>
+    <string name="onboarding_step_two_subtitle">Podrás agrupar todos tus movimientos por categoría para así tener un mejor panorama de como movilizas tu dinero</string>
+    <string name="onboarding_step_three_title">Tus datos están seguros</string>
+    <string name="onboarding_step_three_subtitle">Tus datos son locales, y están encryptados dentro de la aplicación. Solo tú verás tus datos.</string>
+
+
+
+    <string name="give_us_your_name">Con esta app podrias planificar tus finanzas mensuales y llevar control sobre las mismas.</string>
+    <string name="add_operations">Tenemos categorias de gastos e ingresos predeterminados pero tambien podrás ingresar operaciones personalizadas para ti.</string>
     <string name="expenses_categories_divided_to">Las categorias de gastos estan divididas en:</string>
     <string name="ant_expenses">Gastos hormiga</string>
     <string name="ant_expenses_description">Incluye aqui todos los gastos que no tengas establecidos dentro de tu presupuesto</string>
