@@ -1,6 +1,5 @@
 package com.daniel.budgeplanner.ui.composables
 
-import android.location.SettingInjectorService
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,9 +27,6 @@ import com.daniel.budgeplanner.R
 import com.daniel.budgeplanner.data.Steps
 import com.daniel.budgeplanner.ui.theme.fonts
 import com.daniel.budgeplanner.utils.IMAGE
-import com.daniel.budgeplanner.utils.STEP_ONE
-import com.daniel.budgeplanner.utils.STEP_THREE
-import com.daniel.budgeplanner.utils.STEP_TWO
 
 @Composable
 fun OnboardingSteps(
