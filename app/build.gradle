@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.daniel.budgeplanner'
+    namespace 'com.daniel.budgetplanner'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.daniel.budgeplanner"
+        applicationId "com.daniel.budgetplanner"
         minSdk 28
         targetSdk 33
         versionCode 1
