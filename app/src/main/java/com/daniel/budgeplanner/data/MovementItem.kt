@@ -24,12 +24,6 @@ enum class Steps(val step: Int){
     STEP_THREE(3)
 }
 
-data class DashboardView(
-    val userName: String,
-    val startDate: String,
-    val endDate: String
-)
-
 data class DashboardBalances(
     val actualBalance: Int = 0,
     val monthlyIncomeBalance: Int = 0,

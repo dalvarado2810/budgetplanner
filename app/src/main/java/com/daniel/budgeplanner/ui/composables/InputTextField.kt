@@ -21,7 +21,6 @@ import com.daniel.budgeplanner.utils.EMPTY_STRING
 
 @Composable
 fun InputTextField(
-    title: String = "",
     saveName: (name: String) -> Unit
 ) {
     var text by remember {

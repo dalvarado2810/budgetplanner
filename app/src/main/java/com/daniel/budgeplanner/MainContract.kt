@@ -55,8 +55,6 @@ class MainContract {
     }
 
     sealed class Event: UiEvent {
-        object ShowError: Event()
-        object ShowWarning: Event()
         data class SetNewName(val name: String): Event()
     }
 }

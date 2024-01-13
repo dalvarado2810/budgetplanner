@@ -1,7 +1,6 @@
 package com.daniel.budgeplanner
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.daniel.budgeplanner.base.BaseViewModel
 import com.daniel.budgeplanner.data.Steps

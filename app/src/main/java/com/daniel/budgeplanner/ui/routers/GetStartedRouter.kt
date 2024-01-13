@@ -9,7 +9,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
 import com.daniel.budgeplanner.MainActivity
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
@@ -75,16 +74,3 @@ fun GetStartedRouter(
         }
     }
 }
-
-private fun showGetStartedPage(){
-
-}
-
-private fun navigateRoute(name: String, list: List<Movement>): String {
-    return when {
-        (name.isNotEmpty() && list.isEmpty()) -> ScreensNavigation.MonthlyPlanner.routes
-        (name.isNotEmpty() && list.isNotEmpty()) -> ScreensNavigation.BudgetDashboard.routes
-        else -> ScreensNavigation.OnBoarding.routes
-    }
-}
-
