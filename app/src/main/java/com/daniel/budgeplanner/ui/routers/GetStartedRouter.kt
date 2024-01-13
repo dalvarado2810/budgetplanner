@@ -13,12 +13,10 @@ import com.daniel.budgeplanner.MainActivity
 import com.daniel.budgeplanner.MainContract
 import com.daniel.budgeplanner.MainViewModel
 import com.daniel.budgeplanner.data.Steps
-import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.ui.BudgetDashboard
 import com.daniel.budgeplanner.ui.GetStarted
 import com.daniel.budgeplanner.ui.composables.LoadingAnimation
 import com.daniel.budgeplanner.ui.composables.OnboardingSteps
-import com.daniel.budgeplanner.utils.ScreensNavigation
 import kotlinx.coroutines.delay
 
 @Composable

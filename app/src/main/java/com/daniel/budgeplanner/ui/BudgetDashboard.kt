@@ -101,7 +101,6 @@ fun BudgetDashboard(
     val comparator = Comparator<Movement> { a, b -> a.date.compareTo(b.date) }
     val expanded = remember { mutableStateOf(false) }
     val showDatePicker = remember { mutableStateOf(false) }
-    val screenHeight = LocalView.current.height.dp
 
     Box(modifier = Modifier
         .fillMaxSize()
