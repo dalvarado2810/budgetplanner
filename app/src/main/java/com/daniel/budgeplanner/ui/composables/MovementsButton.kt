@@ -1,11 +1,11 @@
 package com.daniel.budgeplanner.ui.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -31,27 +31,27 @@ fun MovementButton(
 ) {
     Card(
         modifier = Modifier
-            .width(width = 97.dp)
-            .height(height = 91.dp),
+            .width(width = 142.dp)
+            .height(height = 65.dp),
         backgroundColor = CardColor,
         elevation = 4.dp,
         shape = RoundedCornerShape(size = 12.dp),
         onClick = onClick
     ) {
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+         ){
             Image(
                 modifier = Modifier
-                    .size(50.dp),
+                    .size(50.dp)
+                    .padding(8.dp),
                 painter = painterResource(id = icon),
                 contentDescription = IMAGE)
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = text,
                 style = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
             )

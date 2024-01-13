@@ -30,7 +30,8 @@ import com.daniel.budgeplanner.utils.IMAGE
 
 @Composable
 fun OnboardingSteps(
-    step: Steps
+    step: Steps,
+    continueAction: () -> Unit
 ) {
     val title = when (step){
         Steps.STEP_ONE -> R.string.onboarding_step_one_title
@@ -48,7 +49,6 @@ fun OnboardingSteps(
         Steps.STEP_THREE -> R.drawable.step_3
     }
 
-
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
@@ -62,19 +62,19 @@ fun OnboardingSteps(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
             TopShape(
                 isOnboarding = true,
                 step = step.step
             ) {}
 
             Text(
+                modifier = Modifier.padding(horizontal = 4.dp),
                 text = stringResource(id = title),
                 color = Color.Black,
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontFamily = fonts,
-                    fontSize = 26.sp)
+                    fontSize = 24.sp)
             )
 
             Text(
@@ -97,11 +97,14 @@ fun OnboardingSteps(
                 painter = painterResource(id = stepImage),
                 contentDescription = IMAGE,
                 modifier = Modifier
+                    .padding(top = 36.dp)
                     .width(width = 74.dp)
                     .height(height = 24.dp)
             )
 
-            OnboardingNextStepButton() { }
+            OnboardingNextStepButton {
+                continueAction()
+            }
         }
     }
 }
@@ -110,6 +113,6 @@ fun OnboardingSteps(
 @Composable
 fun PreviewExample() {
     OnboardingSteps(
-        step = Steps.STEP_THREE
-    )
+        step = Steps.STEP_ONE,
+    ) { }
 }

@@ -17,14 +17,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.daniel.budgeplanner.ui.theme.BudgetGreen
+import com.daniel.budgeplanner.ui.theme.OnboardingBackground
 import kotlinx.coroutines.delay
 
 @Composable
 fun LoadingAnimation() {
     Column(
         modifier = Modifier
+            .background(OnboardingBackground)
             .fillMaxSize()
-            .padding(start = 140.dp, top = 420.dp),
+            .padding(start = 140.dp, top = 340.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -88,8 +90,7 @@ fun LoadingAnimation3(
                         color = circleColor
                             .copy(alpha = animatable.value)
                     )
-            ) {
-            }
+            ) { }
         }
     }
 }

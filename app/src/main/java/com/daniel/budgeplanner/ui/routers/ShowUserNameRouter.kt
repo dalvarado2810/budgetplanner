@@ -32,7 +32,7 @@ fun ShowUserNameRouter(
     }
 
     when (nameState) {
-        is MainContract.ScreenState.Loading, MainContract.ScreenState.initial -> ShowLoadingCircle()
+        is MainContract.ScreenState.Loading, MainContract.ScreenState.Initial -> ShowLoadingCircle()
         is MainContract.ScreenState.Success -> ShowNameInScreen(
             name = (nameState as MainContract.ScreenState.Success).data,
             event = viewModel.event,
@@ -42,6 +42,6 @@ fun ShowUserNameRouter(
                 navController.navigate(route = ScreensNavigation.MonthlyPlanner.routes)
             }
         )
-        is MainContract.ScreenState.error -> {}
+        is MainContract.ScreenState.Error -> {}
     }
 }

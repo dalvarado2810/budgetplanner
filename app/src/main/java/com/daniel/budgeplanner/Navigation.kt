@@ -20,7 +20,7 @@ fun Navigation(viewModel: MainViewModel) {
         startDestination = ScreensNavigation.GetStarted.routes
     ) {
         composable(route = ScreensNavigation.GetStarted.routes) {
-            GetStartedRouter(navController = navController,  viewModel = viewModel)
+            GetStartedRouter(viewModel = viewModel)
         }
         composable(route = ScreensNavigation.OnBoarding.routes) {
             Onboarding(navController = navController, viewModel = viewModel)
@@ -29,7 +29,7 @@ fun Navigation(viewModel: MainViewModel) {
             MonthlyPlanner(navController = navController, viewModel = viewModel)
         }
         composable(route = ScreensNavigation.BudgetDashboard.routes){
-            BudgetDashboard(viewModel = viewModel )
+            BudgetDashboard(viewModel = viewModel)
         }
         composable(route = ScreensNavigation.ShowUserName.routes){
             ShowUserNameRouter(viewModel = viewModel, navController = navController)

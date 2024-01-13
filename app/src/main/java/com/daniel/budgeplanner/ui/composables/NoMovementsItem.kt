@@ -3,6 +3,7 @@ package com.daniel.budgeplanner.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +22,9 @@ import com.daniel.budgeplanner.utils.IMAGE
 fun NoMovementsItem() {
     Column(
         modifier = Modifier
+            .height(340.dp)
             .padding(
-                top = 24.dp
+                top = 6.dp
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

@@ -2,10 +2,11 @@
 
     <!-- Get Started-->
     <string name="app_name">Monitor de Gastos</string>
-    <string name="your_budget">Tu Presupuesto</string>
-    <string name="regulate_expenses">Ajusta tus gastos mensuales</string>
-    <string name="we_can_help">Te ayudamos a planificar tus gastos mensuales</string>
-    <string name="lets_begin">Comencemos</string>
+    <string name="your_budget">Hola, Bienvenid@\nComo te llamas? </string>
+    <string name="regulate_expenses">Tu viaje hacia la educación financiera</string>
+    <string name="we_can_help">Deberás configurar el periodo en el cual será calculado tu presupuesto, puedes elegir semanal, mensual, etc.\n \nPuedes cambiar el periodo cuando desees y siempre deberás cambiarlo al terminar el periodo elegido</string>
+    <string name="lets_begin">Siguiente</string>
+    <string name="name_warning">Por favor selecciona una fecha de inicio y una fecha final para el periodo</string>
 
     <!-- Onboarding-->
 
@@ -37,24 +38,34 @@
 
     <!-- Monthly Planner-->
     <string name="plan_your_budget">Planifiquemos tu presupuesto</string>
+    <string name="close">Cerrar</string>
     <string name="plan_your_budget_instructions">A continuación agrega tu gasto o ingreso segun su clasificación y al terminar presiona continuar y tendrás a planificación de tu presupuesto mensual.</string>
-    <string name="calculate_your_budget">Calcula ahora tu presupuesto</string>
+    <string name="calculate_your_budget">Periodo del %1$s al %2$s</string>
 
     <!-- Dashboard-->
     <string name="incomes">Ingresos</string>
     <string name="outcomes">Gastos</string>
     <string name="hello">Hola, </string>
+    <string name="erase_user">Eliminar usuario</string>
+    <string name="change_date">Escoger nuevo período</string>
     <string name="your_balance">Tu Balance</string>
+    <string name="monthly_income">Ingreso Mensual</string>
+    <string name="other_income">Otros ingresos</string>
+    <string name="health_expenses">Salud</string>
+    <string name="outfit_expenses">Vestimenta</string>
+    <string name="transport_expenses">Transporte</string>
+    <string name="service_expenses">Servicios</string>
     <string name="ant_balance">Gastos Hormiga</string>
-    <string name="food_balance">Gastos Alimentación</string>
+    <string name="food_balance">Alimentación</string>
     <string name="money_sign">$  </string>
+    <string name="dates">Ultimas transacciones\nPeriodo del %1$s al %2$s</string>
     <string name="movement_saved">Movimiento guardado</string>
     <string name="go_to_first_movement">Ir al primer movimiento</string>
 
     <!-- Composables-->
     <string name="income">INGRESO</string>
     <string name="date">Fecha</string>
-    <string name="select_date">Selecciona la fecha</string>
+    <string name="select_date">Selecciona el periodo deseado</string>
     <string name="outcome">GASTO</string>
     <string name="description">Descripción</string>
     <string name="amount">Monto</string>

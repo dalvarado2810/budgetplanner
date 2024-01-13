@@ -21,24 +21,28 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Card
 import androidx.compose.material.TextField
-import androidx.compose.material.Checkbox
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -55,14 +59,21 @@ import com.daniel.budgeplanner.ui.theme.BudgetGreen
 import com.daniel.budgeplanner.utils.MONTHLY_INCOMES
 import com.daniel.budgeplanner.utils.OTHER_INCOMES
 import com.daniel.budgeplanner.utils.ANT_EXPENSES
+import com.daniel.budgeplanner.utils.DEFAULT_CATEGORY
 import com.daniel.budgeplanner.utils.FOOD_EXPENSES
 import com.daniel.budgeplanner.utils.SERVICES_EXPENSES
 import com.daniel.budgeplanner.utils.EMPTY_STRING
+import com.daniel.budgeplanner.utils.HEALTH_EXPENSES
 import com.daniel.budgeplanner.utils.ICON
+import com.daniel.budgeplanner.utils.OUTFIT_EXPENSES
+import com.daniel.budgeplanner.utils.TRANSPORTATION_EXPENSES
 import com.daniel.budgeplanner.utils.toCategoryItem
 import com.daniel.budgeplanner.utils.toViewPattern
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun BottomSheetOperationDialog(
     user: String,
@@ -74,11 +85,18 @@ fun BottomSheetOperationDialog(
     val context = LocalContext.current
     val toastMessage = stringResource(id = R.string.add_movement_amount)
     val title = if (color == BudgetGreen) stringResource(id = R.string.income)
-            else stringResource(id = R.string.outcome)
+    else stringResource(id = R.string.outcome)
     val categories = if (color == BudgetGreen) {
         listOf(MONTHLY_INCOMES, OTHER_INCOMES)
     } else {
-        listOf(FOOD_EXPENSES, ANT_EXPENSES, SERVICES_EXPENSES )
+        listOf(
+            FOOD_EXPENSES,
+            ANT_EXPENSES,
+            SERVICES_EXPENSES,
+            OUTFIT_EXPENSES,
+            TRANSPORTATION_EXPENSES,
+            HEALTH_EXPENSES
+        )
     }
     val categorySelected = remember { mutableStateOf(EMPTY_STRING) }
 
@@ -99,6 +117,15 @@ fun BottomSheetOperationDialog(
     val colorCheck = remember { mutableStateOf(Color.Gray) }
     val showDatePicker = remember { mutableStateOf(false) }
     val dateSelected = remember { mutableStateOf(LocalDate.now()) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+
+    val selectedTemp = remember {
+        mutableStateOf(DEFAULT_CATEGORY)
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -161,19 +188,24 @@ fun BottomSheetOperationDialog(
             TextField(
                 value = descriptionText,
                 onValueChange = {
-                    if (it.text.length <= 26) descriptionText = it },
+                    if (it.text.length <= 26) descriptionText = it
+                },
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = Color.Black,
                     cursorColor = Color.White,
                     backgroundColor = color
                 ),
+                singleLine = true,
                 modifier = Modifier
                     .height(60.dp)
                     .align(Alignment.CenterHorizontally),
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center
+                ),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done
                 )
             )
         }
@@ -192,7 +224,9 @@ fun BottomSheetOperationDialog(
                 value = amountText,
                 onValueChange = {
                     if (it.text.length <= 26 &&
-                        it.text.isDigitsOnly())  amountText = it },
+                        it.text.isDigitsOnly()
+                    ) amountText = it
+                },
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = Color.Black,
@@ -213,13 +247,14 @@ fun BottomSheetOperationDialog(
                     )
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.NumberPassword
+                    keyboardType = KeyboardType.NumberPassword,
+                    imeAction = ImeAction.Done
                 ),
                 visualTransformation = VisualTransformation.None
             )
         }
 
-        Button (
+        Button(
             onClick = { showDatePicker.value = true },
             elevation = androidx.compose.material.ButtonDefaults.elevation(
                 defaultElevation = 2.dp
@@ -250,32 +285,47 @@ fun BottomSheetOperationDialog(
             Text(text = dateSelected.value.toViewPattern())
         }
 
-        DialogText(
-            text = stringResource(id = R.string.category),
-            size = 18
-        )
-
         Column(
+            modifier = Modifier.padding(bottom = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            categories.forEach { item ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = categorySelected.value == item,
-                        onCheckedChange = {
-                            category = item.toCategoryItem()
-                            if (categorySelected.value != item) {
-                                categorySelected.value = item
-                            }
 
-                        },
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = color,
-                            uncheckedColor = Color.Gray
+            androidx.compose.material3.ExposedDropdownMenuBox(
+                expanded = isExpanded,
+                onExpandedChange = { isExpanded = !isExpanded },
+            ) {
+                androidx.compose.material3.TextField(
+                    shape = RoundedCornerShape(14.dp),
+                    modifier = Modifier.menuAnchor(),
+                    readOnly = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                    value = selectedTemp.value,
+                    onValueChange = {},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors(
+                        unfocusedContainerColor = color,
+                        focusedContainerColor = color,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                )
+                ExposedDropdownMenu(
+                    expanded = isExpanded,
+                    onDismissRequest = { isExpanded = false },
+                ) {
+                    categories.forEach { selectionOption ->
+                        DropdownMenuItem(
+                            text = { Text(selectionOption) },
+                            onClick = {
+                                category = selectionOption.toCategoryItem()
+                                selectedTemp.value = selectionOption
+                                categorySelected.value = selectionOption
+                                isExpanded = false
+                                keyboardController?.hide()
+                            },
                         )
-                    )
-                    Text(text = item)
+                    }
                 }
             }
         }
@@ -312,6 +362,7 @@ fun BottomSheetOperationDialog(
             descriptionText = TextFieldValue(EMPTY_STRING)
             amountText = TextFieldValue(EMPTY_STRING)
             categorySelected.value = EMPTY_STRING
+            selectedTemp.value = DEFAULT_CATEGORY
             isChecked.value = false
             colorCheck.value = Color.Gray
             if (amount != 0) {

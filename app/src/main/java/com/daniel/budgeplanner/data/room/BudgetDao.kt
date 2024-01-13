@@ -35,4 +35,8 @@ interface MovementsDao {
 
     @Delete
     suspend fun deleteMovement(movement: Movement)
+
+    @Query("SELECT * FROM $DB_MOVEMENTS WHERE date BETWEEN :startDate AND :endDate AND movementUser = :user" )
+    fun getAllMonthlyMovementsByUser(startDate: String, endDate: String, user: String): Flow<Movements>
+
 }

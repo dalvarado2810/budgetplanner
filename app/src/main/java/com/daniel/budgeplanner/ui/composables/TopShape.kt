@@ -69,20 +69,18 @@ fun TopShape(
         if (image !=  null) {
             when (step){
                 STEP_ONE -> {
-                    ImageSteps(image = image, pt = 120.dp, pb = 0.dp, width = 360.dp , height = 345.dp)
+                    ImageSteps(image = image, pt = 80.dp, pb = 0.dp, ps = 60.dp, width = 260.dp , height = 245.dp)
                 }
                 STEP_TWO -> {
-                    ImageSteps(image = image, pt = 30.dp, pb =  25.dp, width = 360.dp, height = 363.dp)
+                    ImageSteps(image = image, pt = 30.dp, pb =  25.dp, ps = 60.dp, width = 260.dp, height = 263.dp)
                 }
                 STEP_THREE -> {
-                    ImageSteps(image = image, pt = 0.dp, pb =  0.dp, width = 447.dp, height = 428.dp)
+                    ImageSteps(image = image, pt = 0.dp, pb =  0.dp, ps = 40.dp, width = 347.dp, height = 328.dp)
                 }
-                else -> {
-
-                }
+                else -> { }
             }
-
         }
+
         Text(
             text = title,
             color = Color.Black,
@@ -99,8 +97,10 @@ fun TopShape(
                     end = 12.dp
                 )
         )
+
         if (buttonVisible) {
-            Row ( modifier = Modifier
+            Row (
+                modifier = Modifier
                 .align(Alignment.TopEnd)
             ){
                 Text(
@@ -117,6 +117,7 @@ fun TopShape(
                         .padding(end = 8.dp, top = 24.dp)
                         .width(140.dp)
                 )
+
                 Button(
                     modifier = Modifier
                         .padding(end = 12.dp)

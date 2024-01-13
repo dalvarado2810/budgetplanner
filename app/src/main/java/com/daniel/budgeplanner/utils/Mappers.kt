@@ -25,6 +25,9 @@ fun String.toCategoryItem(): Category {
         FOOD_EXPENSES -> Category.FOOD_EXPENSES
         ANT_EXPENSES -> Category.ANT_EXPENSES
         SERVICES_EXPENSES -> Category.SERVICES_EXPENSES
+        OUTFIT_EXPENSES -> Category.OUTFIT_EXPENSES
+        TRANSPORTATION_EXPENSES -> Category.TRANSPORTATION_EXPENSES
+        HEALTH_EXPENSES -> Category.HEALTH_EXPENSES
         MONTHLY_INCOMES -> Category.MONTHLY_INCOMES
         else -> Category.OTHER_INCOMES
     }
@@ -57,3 +60,13 @@ fun convertMillisToDate(millis: Long):LocalDate {
 }
 
 fun LocalDate.toViewPattern(): String = format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+
+fun String.changeDateFormat(): String {
+    return try {
+        val originalDate = LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        originalDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+    } catch (e: Exception) {
+        e.printStackTrace()
+        this
+    }
+}

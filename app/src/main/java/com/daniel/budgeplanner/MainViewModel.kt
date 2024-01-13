@@ -1,8 +1,10 @@
 package com.daniel.budgeplanner
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.daniel.budgeplanner.base.BaseViewModel
+import com.daniel.budgeplanner.data.Steps
 import com.daniel.budgeplanner.data.sharedpreferences.AppPreference
 import com.daniel.budgeplanner.domain.entity.Movement
 import com.daniel.budgeplanner.repositories.MovementRepository
@@ -27,15 +29,14 @@ class MainViewModel @Inject constructor(
         MainContract.Event
         >(
 ) {
-
-    val monthlyMovements = repository.getMovements(getRangeOfDates().first,getRangeOfDates().second)
-    val actualBalance = repository.getActualBalance(getRangeOfDates().first,getRangeOfDates().second)
-    val antExpensesBalance = repository.getAntExpenses(getRangeOfDates().first,getRangeOfDates().second)
-    val foodExpensesBalance = repository.getFoodExpenses(getRangeOfDates().first,getRangeOfDates().second)
+    val monthlyMovements = repository.getMovementsByName(getRangeOfDates().first,getRangeOfDates().second, getUserName())
+    val actualBalance = repository.getActualBalance(getRangeOfDates().first,getRangeOfDates().second,getUserName())
 
     override fun createInitialState(): MainContract.State {
         return MainContract.State(
-            MainContract.ScreenState.initial
+            MainContract.ScreenState.Initial,
+            MainContract.OnboardingState.Loading,
+            MainContract.DashboardState.Loading
         )
     }
 
@@ -63,8 +64,8 @@ class MainViewModel @Inject constructor(
             }
             is MainContract.Action.SetSuccessState -> {
                 setState {
-                    copy( screenState =
-                    MainContract.ScreenState.initial)
+                    copy( onboardingState =
+                    MainContract.OnboardingState.Loading)
                 }
             }
             is MainContract.Action.ChangeName -> {
@@ -75,19 +76,61 @@ class MainViewModel @Inject constructor(
                     startDate = action.startDate,
                     endDate = action.endDate)
             }
+            is MainContract.Action.NextStep -> {
+                when (action.step){
+                    Steps.STEP_ONE -> {
+                        setState {
+                            copy( onboardingState =
+                            MainContract.OnboardingState.StepTwo)
+                        }
+                    }
+                    Steps.STEP_TWO -> {
+                        setState {
+                            copy( onboardingState =
+                            MainContract.OnboardingState.StepThree)
+                        }
+                    }
+                    Steps.STEP_THREE -> {
+                        setState {
+                            copy( onboardingState =
+                            MainContract.OnboardingState.Finish)
+                        }
+                    }
+
+                }
+                setState {
+                    copy( screenState =
+                    MainContract.ScreenState.Initial)
+                }
+            }
+            is MainContract.Action.ObtainMovements -> {
+                setState {
+                    copy(
+                        dashboardState =
+                        MainContract.DashboardState.Success
+                    )
+                }
+            }
         }
     }
 
     fun getUserName(): String = sharedPreferences.getString(USER_NAME) ?: EMPTY_STRING
 
     private fun setUserNameState() {
-        setState {
-            copy(
-                screenState =
-                MainContract.ScreenState.Success(
-                    getUserName()
+        if(getUserName().isNotEmpty()) {
+            setState {
+                copy(
+                    onboardingState =
+                    MainContract.OnboardingState.NoShowOnboarding
                 )
-            )
+            }
+        } else {
+            setState {
+                copy(
+                    onboardingState =
+                    MainContract.OnboardingState.StepOne
+                )
+            }
         }
     }
 
@@ -99,11 +142,11 @@ class MainViewModel @Inject constructor(
         sharedPreferences.setString(END_DATE, endDate.toString())
         setState {
             copy( screenState =
-            MainContract.ScreenState.error)
+            MainContract.ScreenState.Error)
         }
     }
 
-    private fun getRangeOfDates(): Pair<String, String> {
+    fun getRangeOfDates(): Pair<String, String> {
         val isMonthlyPeriodSet = sharedPreferences.getString(START_DATE) != null &&
                 sharedPreferences.getString(END_DATE) != null
         return if (isMonthlyPeriodSet) {

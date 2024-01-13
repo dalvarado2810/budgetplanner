@@ -7,6 +7,5 @@ sealed class ScreensNavigation(
     object OnBoarding: ScreensNavigation("onBoarding")
     object MonthlyPlanner: ScreensNavigation("monthlyPlanner")
     object BudgetDashboard: ScreensNavigation("budgetDashboard")
-
     object ShowUserName: ScreensNavigation("showUserName")
 }

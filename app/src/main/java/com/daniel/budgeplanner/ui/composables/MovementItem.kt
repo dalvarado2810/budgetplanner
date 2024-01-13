@@ -35,9 +35,12 @@ fun MovementItem(
     item: MovementItem
 ) {
     val resourceId: Int = when (item.category) {
-        Category.FOOD_EXPENSES -> R.drawable.shopping_cart
-        Category.ANT_EXPENSES -> R.drawable.money
+        Category.FOOD_EXPENSES -> R.drawable.grocery_store
+        Category.ANT_EXPENSES -> R.drawable.edc_machine
         Category.SERVICES_EXPENSES -> R.drawable.services
+        Category.OUTFIT_EXPENSES -> R.drawable.outfit
+        Category.HEALTH_EXPENSES -> R.drawable.vaccine
+        Category.TRANSPORTATION_EXPENSES -> R.drawable.gas
         Category.MONTHLY_INCOMES -> R.drawable.finance_icon
         Category.OTHER_INCOMES -> R.drawable.various_input
     }
@@ -112,10 +115,9 @@ fun AmountTextView(
     item: MovementItem
 ) {
     val textColor = when (item.category) {
-        Category.FOOD_EXPENSES,
-        Category.ANT_EXPENSES,
-        Category.SERVICES_EXPENSES -> ExpensesColor
-        else -> BudgetGreen
+        Category.MONTHLY_INCOMES,
+        Category.OTHER_INCOMES -> BudgetGreen
+        else -> ExpensesColor
     }
 
     Box(

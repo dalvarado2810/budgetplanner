@@ -81,9 +81,9 @@ fun MonthlyPlanner(
             showToast(context, (viewState.screenState as MainContract.ScreenState.Success).data)
             viewModel.setAction(action = MainContract.Action.SetSuccessState)
         }
-        is MainContract.ScreenState.initial -> {}
+        is MainContract.ScreenState.Initial -> {}
         is MainContract.ScreenState.Loading -> {}
-        is MainContract.ScreenState.error -> {}
+        is MainContract.ScreenState.Error -> {}
     }
 
     Box(
