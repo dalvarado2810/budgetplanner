@@ -143,6 +143,7 @@ fun BottomSheetOperationDialog(
         ) {
             Text(
                 text = title,
+                color = Color.Black,
                 modifier = Modifier
                     .padding(vertical = 8.dp),
                 style = TextStyle(
@@ -243,7 +244,8 @@ fun BottomSheetOperationDialog(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.dollar),
-                        contentDescription = ICON
+                        contentDescription = ICON,
+                        tint = Color.Black,
                     )
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -316,7 +318,10 @@ fun BottomSheetOperationDialog(
                 ) {
                     categories.forEach { selectionOption ->
                         DropdownMenuItem(
-                            text = { Text(selectionOption) },
+                            text = { Text(
+                                text = selectionOption,
+                                color = Color.Black)
+                                   },
                             onClick = {
                                 category = selectionOption.toCategoryItem()
                                 selectedTemp.value = selectionOption

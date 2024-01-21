@@ -147,7 +147,7 @@ fun GetStarted (
                         start = 22.dp,
                         end = 22.dp,
                         top = 6.dp,
-                        bottom = 80.dp
+                        bottom = 20.dp
                     )
             )
             ContinueButton(enabled = buttonEnabled.value, text = stringResource(id = R.string.lets_begin)) {

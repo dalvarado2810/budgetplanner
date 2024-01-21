@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.remember
@@ -12,9 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.ui.theme.BackGround
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.utils.EMPTY_STRING
@@ -30,6 +34,15 @@ fun InputTextField(
    TextField(
         value = text,
         singleLine = true,
+       label = {
+           Text(
+               text = "Ingresa tu nombre",
+               color = Color.Black,
+               style = TextStyle(
+                   fontSize = 10.sp
+               )
+           )
+       },
         onValueChange = {
             if (it.text.isEmpty()) saveName(EMPTY_STRING)
             if (it.text.length <= 30) {
@@ -37,9 +50,12 @@ fun InputTextField(
                 saveName(it.text)
             }
         },
+
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = BudgetGreen,
-            cursorColor = BudgetGreen
+            cursorColor = BudgetGreen,
+            backgroundColor = Color.LightGray,
+            textColor = Color.Black
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
            imeAction = ImeAction.Done

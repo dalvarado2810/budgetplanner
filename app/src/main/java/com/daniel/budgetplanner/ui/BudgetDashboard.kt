@@ -162,6 +162,7 @@ fun BudgetDashboard(
                             Text(
                                 text = stringResource(id = R.string.erase_user),
                                 fontSize = 12.sp,
+                                color = Color.Black,
                                 fontFamily = fonts)
                         }
                     )
@@ -174,6 +175,7 @@ fun BudgetDashboard(
                             Text(
                                 text = stringResource(id = R.string.change_date),
                                 fontSize = 12.sp,
+                                color = Color.Black,
                                 fontFamily = fonts)
                         }
                     )
