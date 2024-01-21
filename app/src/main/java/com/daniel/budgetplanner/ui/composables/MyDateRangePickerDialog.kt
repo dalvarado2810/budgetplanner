@@ -32,9 +32,10 @@ fun MyDateRangePickerDialog(
         onDismissRequest = { onDismiss() },
         confirmButton = {
             Button(onClick = {
+                val endDate = selectedEndDate ?: selectedStarDate
                 onRangeDatesSelected(
                     selectedStarDate,
-                    selectedEndDate
+                    endDate
                 )
                 onDismiss()
             }

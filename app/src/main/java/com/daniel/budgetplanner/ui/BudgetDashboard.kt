@@ -42,10 +42,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.DpOffset
 import com.daniel.budgetplanner.R
 import androidx.compose.ui.unit.dp
@@ -100,6 +103,15 @@ fun BudgetDashboard(
     val comparator = Comparator<Movement> { a, b -> a.date.compareTo(b.date) }
     val expanded = remember { mutableStateOf(false) }
     val showDatePicker = remember { mutableStateOf(false) }
+    val formattedText = buildAnnotatedString {
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Light)) {
+            append(stringResource(id = R.string.hello))
+        }
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+            append(" ")
+            append(userName)
+        }
+    }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -120,27 +132,16 @@ fun BudgetDashboard(
 
             Row (modifier = Modifier
                 .fillMaxWidth()
-                .height(36.dp)
+                .height(36.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
                     modifier = Modifier
-                        .weight(3f)
                         .padding(start = 24.dp, top = 16.dp),
-                    text = stringResource(id = R.string.hello),
+                    text = formattedText,
                     color = Color.Black,
                     style = TextStyle(
                         fontSize = 14.sp,
-                        fontWeight = FontWeight.Light)
-                )
-
-                Text(
-                    modifier = Modifier
-                        .weight(15f)
-                        .padding(top = 10.dp),
-                    text = userName,
-                    color = Color.Black,
-                    style = TextStyle(
-                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold)
                 )
 
@@ -186,7 +187,8 @@ fun BudgetDashboard(
                     onClick = {
                         expanded.value = !expanded.value
                     },
-                    modifier = Modifier.weight(3f)
+                    modifier = Modifier
+                        .padding(end = 24.dp),
                 ) {
                     Image(painterResource(id = R.drawable.baseline_menu_24), contentDescription = "Dropdown Icon")
                 }

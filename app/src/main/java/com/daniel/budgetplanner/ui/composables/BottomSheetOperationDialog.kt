@@ -168,6 +168,7 @@ fun BottomSheetOperationDialog(
                 onClick = {
                     closeClick()
                     categorySelected.value = EMPTY_STRING
+                    selectedTemp.value = DEFAULT_CATEGORY
                 },
                 modifier = Modifier
                     .padding(start = 64.dp)
