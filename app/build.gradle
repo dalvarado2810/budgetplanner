@@ -13,8 +13,8 @@ android {
         applicationId "com.daniel.budgetplanner"
         minSdk 28
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -22,10 +22,22 @@ android {
         }
     }
 
+
     buildTypes {
+        debug {
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationVariants.configureEach { variant ->
+                variant.outputs.configureEach {
+                    def flavor = variant.name
+                    def versionName = variant.versionName
+                    def versionCode = variant.versionCode
+                    outputFileName = "BudgetPlanner-${flavor}-v${versionName}(${versionCode}).apk"
+                }
+            }
         }
     }
     compileOptions {
