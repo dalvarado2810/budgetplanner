@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
-import com.daniel.budgetplanner.utils.IMAGE
+import com.daniel.budgetplanner.utils.IMAGE_ONBOARDING_STEP
 
 @Composable
 fun OnboardingNextStepButton(
@@ -41,7 +41,7 @@ fun OnboardingNextStepButton(
     ) {
         Image(
             painter = painterResource(id = R.drawable.continue_onboarding_step),
-            contentDescription = IMAGE,
+            contentDescription = IMAGE_ONBOARDING_STEP,
             alignment = Alignment.Center,
             modifier = Modifier
                 .width(width = 174.dp)

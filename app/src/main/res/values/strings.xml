@@ -46,8 +46,55 @@
     <string name="incomes">Ingresos</string>
     <string name="outcomes">Gastos</string>
     <string name="hello">Hola,   </string>
+    <string name="add_your_name">Ingresa tu nombre</string>
     <string name="erase_user">Eliminar usuario</string>
     <string name="change_date">Escoger nuevo período</string>
+    <string name="agree">Acepto las </string>
+    <string name="privacy_policy">Políticas de privacidad</string>
+    <string name="privacy_policy_title">Política de Privacidad para Monitor de Gastos</string>
+    <string name="privacy_policy_date">Fecha de vigencia: 21-01-2024</string>
+    <string name="privacy_policy_questions">Si tiene preguntas o inquietudes sobre esta política de privacidad, comuníquese con nosotros al correo enviromenttech@gmail.com</string>
+    <string name="exit">Salir</string>
+
+    <string name="privacy_policy_text">
+        <![CDATA[
+            Gracias por utilizar Monitor de Gastos.\n\n Esta política de privacidad describe cómo recopilamos, usamos y compartimos información sobre usted cuando utiliza nuestra aplicación Monitor de Gastos. Al descargar, instalar y utilizar nuestra aplicación, usted acepta los términos de esta política de privacidad.\n\n
+
+            1. Información Recopilada\n\n
+
+            1.1 Información Personal:\n\n
+            No recopilamos información personal identificable mientras utiliza la aplicación, ya que Monitor de Gastos opera de manera totalmente offline y no requiere conexión a internet.\n\n
+
+            1.2 Información Financiera:\n\n
+            La aplicación puede recopilar y almacenar datos financieros relacionados con sus gastos y transacciones. Sin embargo, esta información se almacena de manera local en su dispositivo y no se transmite a nuestros servidores ni a terceros.\n\n
+
+            2. Uso de la Información\n\n
+
+            2.1 Propósito Principal:\n\n
+            La información recopilada se utiliza exclusivamente con el propósito de ofrecer funcionalidades relacionadas con el monitoreo de gastos y facilitar la gestión financiera personal del usuario.\n\n
+
+            2.2 Sin Conexión a Internet:\n\n
+            Dado que Monitor de Gastos opera offline, sus datos financieros no se transmiten a través de internet, garantizando la privacidad y seguridad de su información.\n\n
+
+            3. Compartir Información\n\n
+
+            3.1 Terceros:\n\n
+            No compartimos su información con terceros, ya que la aplicación opera de manera local y no requiere la intervención de servicios externos.\n\n
+
+            3.2 Seguridad:\n\n
+            Implementamos medidas de seguridad para proteger la información almacenada en su dispositivo. Sin embargo, es responsabilidad del usuario mantener su dispositivo seguro y protegido mediante el uso de contraseñas u otras medidas de seguridad.\n\n
+
+            4. Cambios en la Política de Privacidad\n\n
+
+            4.1 Actualizaciones:\n\n
+            Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. Las actualizaciones se reflejarán en la versión más reciente de la aplicación disponible en la tienda de Google Play.\n\n
+
+            5. Contacto\n\n
+
+            Si tiene preguntas o inquietudes sobre esta política de privacidad, comuníquese con nosotros en enviromenttech@gmail.com.\n\n
+        ]]>
+    </string>
+
     <string name="your_balance">Tu Balance</string>
     <string name="monthly_income">Ingreso Mensual</string>
     <string name="other_income">Otros ingresos</string>

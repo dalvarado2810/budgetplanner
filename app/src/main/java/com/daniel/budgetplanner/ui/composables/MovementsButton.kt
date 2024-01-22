@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.ui.theme.CardColor
-import com.daniel.budgetplanner.utils.IMAGE
+import com.daniel.budgetplanner.utils.IMAGE_MOVEMENTS
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -47,7 +47,7 @@ fun MovementButton(
                     .size(50.dp)
                     .padding(8.dp),
                 painter = painterResource(id = icon),
-                contentDescription = IMAGE)
+                contentDescription = IMAGE_MOVEMENTS)
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = text,

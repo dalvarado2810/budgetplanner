@@ -45,7 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,6 +55,7 @@ import com.daniel.budgetplanner.domain.entity.Movement
 import com.daniel.budgetplanner.domain.entity.MovementType
 import com.daniel.budgetplanner.ui.showToast
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
+import com.daniel.budgetplanner.ui.theme.fonts
 import com.daniel.budgetplanner.utils.MONTHLY_INCOMES
 import com.daniel.budgetplanner.utils.OTHER_INCOMES
 import com.daniel.budgetplanner.utils.ANT_EXPENSES
@@ -64,9 +64,11 @@ import com.daniel.budgetplanner.utils.FOOD_EXPENSES
 import com.daniel.budgetplanner.utils.SERVICES_EXPENSES
 import com.daniel.budgetplanner.utils.EMPTY_STRING
 import com.daniel.budgetplanner.utils.HEALTH_EXPENSES
-import com.daniel.budgetplanner.utils.ICON
+import com.daniel.budgetplanner.utils.ICON_CLOSE
+import com.daniel.budgetplanner.utils.ICON_DATE
 import com.daniel.budgetplanner.utils.OUTFIT_EXPENSES
 import com.daniel.budgetplanner.utils.TRANSPORTATION_EXPENSES
+import com.daniel.budgetplanner.utils.rememberCurrencyVisualTransformation
 import com.daniel.budgetplanner.utils.toCategoryItem
 import com.daniel.budgetplanner.utils.toViewPattern
 import java.time.LocalDate
@@ -83,6 +85,7 @@ fun BottomSheetOperationDialog(
 ) {
 
     val context = LocalContext.current
+    val currencyTransformation = rememberCurrencyVisualTransformation(currency = "USD")
     val toastMessage = stringResource(id = R.string.add_movement_amount)
     val title = if (color == BudgetGreen) stringResource(id = R.string.income)
     else stringResource(id = R.string.outcome)
@@ -169,6 +172,9 @@ fun BottomSheetOperationDialog(
                     closeClick()
                     categorySelected.value = EMPTY_STRING
                     selectedTemp.value = DEFAULT_CATEGORY
+                    descriptionText = TextFieldValue(EMPTY_STRING)
+                    amountText = TextFieldValue(EMPTY_STRING)
+                    dateSelected.value = LocalDate.now()
                 },
                 modifier = Modifier
                     .padding(start = 64.dp)
@@ -176,7 +182,7 @@ fun BottomSheetOperationDialog(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = ICON,
+                    contentDescription = ICON_CLOSE,
                     tint = Color.Black,
                 )
             }
@@ -203,7 +209,9 @@ fun BottomSheetOperationDialog(
                     .height(60.dp)
                     .align(Alignment.CenterHorizontally),
                 textStyle = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -225,8 +233,8 @@ fun BottomSheetOperationDialog(
             TextField(
                 value = amountText,
                 onValueChange = {
-                    if (it.text.length <= 26 &&
-                        it.text.isDigitsOnly()
+                    if (it.text.length <= 9 &&
+                        it.text.isDigitsOnly() && !it.text.startsWith("0")
                     ) amountText = it
                 },
                 shape = RoundedCornerShape(24.dp),
@@ -237,23 +245,18 @@ fun BottomSheetOperationDialog(
                 ),
                 modifier = Modifier
                     .height(60.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .align(Alignment.Start),
                 textStyle = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
+                    fontFamily = fonts,
+                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 ),
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.dollar),
-                        contentDescription = ICON,
-                        tint = Color.Black,
-                    )
-                },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done
                 ),
-                visualTransformation = VisualTransformation.None
+                visualTransformation = currencyTransformation
             )
         }
 
@@ -281,7 +284,7 @@ fun BottomSheetOperationDialog(
                 painter = painterResource(
                     id = R.drawable.baseline_date_range_24
                 ),
-                contentDescription = ICON,
+                contentDescription = ICON_DATE,
                 modifier = Modifier.padding(end = 6.dp),
                 alignment = Alignment.Center
             )
@@ -370,6 +373,7 @@ fun BottomSheetOperationDialog(
             categorySelected.value = EMPTY_STRING
             selectedTemp.value = DEFAULT_CATEGORY
             isChecked.value = false
+            dateSelected.value = LocalDate.now()
             colorCheck.value = Color.Gray
             if (amount != 0) {
                 saveClick(movement)

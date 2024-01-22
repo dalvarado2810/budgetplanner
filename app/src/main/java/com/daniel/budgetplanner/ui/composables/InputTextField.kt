@@ -14,11 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.ui.theme.BackGround
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.utils.EMPTY_STRING
@@ -36,7 +38,7 @@ fun InputTextField(
         singleLine = true,
        label = {
            Text(
-               text = "Ingresa tu nombre",
+               text = stringResource(id = R.string.add_your_name),
                color = Color.Black,
                style = TextStyle(
                    fontSize = 10.sp
@@ -45,7 +47,7 @@ fun InputTextField(
        },
         onValueChange = {
             if (it.text.isEmpty()) saveName(EMPTY_STRING)
-            if (it.text.length <= 30) {
+            if (it.text.length <= 26) {
                 text = it
                 saveName(it.text)
             }

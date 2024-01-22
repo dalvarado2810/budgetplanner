@@ -22,21 +22,25 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LoadingAnimation() {
+
     Column(
         modifier = Modifier
             .background(OnboardingBackground)
             .fillMaxSize()
-            .padding(start = 140.dp, top = 340.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoadingAnimation3()
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            LoadingAnimation3()
+        }
     }
 }
 
 @Composable
 fun LoadingAnimation3(
-    circleColor: Color = BudgetGreen,
+    circleColor: Color = Color.Green,
     circleSize: Dp = 36.dp,
     animationDelay: Int = 400,
     initialAlpha: Float = 0.3f
@@ -73,7 +77,9 @@ fun LoadingAnimation3(
 
     Row(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
 
         circles.forEachIndexed { index, animatable ->

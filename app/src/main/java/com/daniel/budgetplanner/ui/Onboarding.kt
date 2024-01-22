@@ -37,7 +37,8 @@ import com.daniel.budgetplanner.ui.composables.ContinueButton
 import com.daniel.budgetplanner.ui.composables.InputTextField
 import com.daniel.budgetplanner.ui.composables.TopShape
 import com.daniel.budgetplanner.utils.EMPTY_STRING
-import com.daniel.budgetplanner.utils.ICON
+import com.daniel.budgetplanner.utils.ICON_ONBOARDING
+import com.daniel.budgetplanner.utils.ICON_RIGHT
 import com.daniel.budgetplanner.utils.ScreensNavigation
 
 @Composable
@@ -61,7 +62,7 @@ fun Onboarding(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            TopShape(stringResource(id = R.string.onboarding_step_one_subtitle)) {}
+            TopShape(stringResource(id = R.string.onboarding_step_one_subtitle))
 
             InputTextField {
                 name = it
@@ -158,7 +159,7 @@ fun LeftRow(
     ) {
         Image(
             painter = painterResource(id = resourceId),
-            contentDescription = ICON,
+            contentDescription = ICON_ONBOARDING,
             modifier = Modifier
                 .padding()
                 .height(50.dp)
@@ -216,7 +217,7 @@ fun RightRow(
         }
         Image(
             painter = painterResource(id = resourceId),
-            contentDescription = ICON,
+            contentDescription = ICON_RIGHT,
             modifier = Modifier
                 .height(50.dp)
                 .width(50.dp))

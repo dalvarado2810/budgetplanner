@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.data.Steps
 import com.daniel.budgetplanner.ui.theme.fonts
-import com.daniel.budgetplanner.utils.IMAGE
+import com.daniel.budgetplanner.utils.IMAGE_STEP_IMAGE
 
 @Composable
 fun OnboardingSteps(
@@ -62,48 +63,73 @@ fun OnboardingSteps(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            TopShape(
-                isOnboarding = true,
-                step = step.step
-            ) {}
-
-            Text(
-                modifier = Modifier.padding(horizontal = 4.dp),
-                text = stringResource(id = title),
-                color = Color.Black,
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = fonts,
-                    fontSize = 24.sp)
-            )
-
-            Text(
-                text = stringResource(id = subtitle),
-                color = Color.Black.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center,
-                style = TextStyle(
-                    fontFamily = fonts,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                ), modifier = Modifier
-                    .width(260.dp)
-                    .padding(
-                        top = 16.dp,
-                        bottom = 20.dp
-                    )
-            )
-
-            Image(
-                painter = painterResource(id = stepImage),
-                contentDescription = IMAGE,
+            Box (
                 modifier = Modifier
-                    .padding(top = 36.dp)
-                    .width(width = 74.dp)
-                    .height(height = 24.dp)
-            )
+                    .fillMaxWidth()
+                    .weight(1f)
+            ){
+                TopShape(
+                    isOnboarding = true,
+                    step = step.step
+                )
+            }
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        text = stringResource(id = title),
+                        color = Color.Black,
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fonts,
+                            fontSize = 24.sp)
+                    )
 
-            OnboardingNextStepButton {
-                continueAction()
+                    Text(
+                        text = stringResource(id = subtitle),
+                        color = Color.Black.copy(alpha = 0.7f),
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            fontFamily = fonts,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
+                        ), modifier = Modifier
+                            .width(260.dp)
+                            .padding(
+                                top = 16.dp,
+                                bottom = 20.dp
+                            )
+                    )
+                }
+            }
+            Box {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = stepImage),
+                        contentDescription = IMAGE_STEP_IMAGE,
+                        modifier = Modifier
+                            .padding(top = 36.dp)
+                            .width(width = 74.dp)
+                            .height(height = 24.dp)
+                    )
+
+                    OnboardingNextStepButton {
+                        continueAction()
+                    }
+                }
             }
         }
     }

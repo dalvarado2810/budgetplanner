@@ -8,12 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.ui.theme.BackGround
-import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.ui.theme.OnboardingBackground
 import com.daniel.budgetplanner.utils.EMPTY_STRING
-import com.daniel.budgetplanner.utils.ICON
 import com.daniel.budgetplanner.utils.IMAGE
 import com.daniel.budgetplanner.utils.STEP_ONE
 import com.daniel.budgetplanner.utils.STEP_THREE
@@ -41,9 +34,7 @@ import com.daniel.budgetplanner.utils.STEP_TWO
 fun TopShape(
     title: String = EMPTY_STRING,
     step: Int? = null,
-    isOnboarding: Boolean = false,
-    buttonVisible: Boolean = false,
-    onClick: () -> Unit
+    isOnboarding: Boolean = false
 ) {
     val backGround = if (isOnboarding) OnboardingBackground else BackGround
     val moneyTopImg = if (isOnboarding) R.drawable.money_top else R.drawable.splash
@@ -97,42 +88,5 @@ fun TopShape(
                     end = 12.dp
                 )
         )
-
-        if (buttonVisible) {
-            Row (
-                modifier = Modifier
-                .align(Alignment.TopEnd)
-            ){
-                Text(
-                    text = stringResource(id = R.string.select_range_of_date),
-                    color = Color.Black,
-                    textAlign = TextAlign.End,
-                    style = TextStyle(
-                        fontSize = 8.sp,
-                        fontWeight = FontWeight.Bold,
-                        lineBreak = LineBreak.Heading,
-                        letterSpacing = 2.sp
-                    ),
-                    modifier = Modifier
-                        .padding(end = 8.dp, top = 24.dp)
-                        .width(140.dp)
-                )
-
-                Button(
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .width(48.dp),
-                    onClick = { onClick() },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = BudgetGreen
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.DateRange,
-                        contentDescription = ICON
-                    )
-                }
-            }
-        }
     }
 }

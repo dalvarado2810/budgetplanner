@@ -3,7 +3,7 @@ package com.daniel.budgetplanner.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,23 +17,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.R
-import com.daniel.budgetplanner.utils.IMAGE
+import com.daniel.budgetplanner.utils.IMAGE_NO_MOVEMENTS
 
 @Composable
 fun NoMovementsItem() {
     Column(
         modifier = Modifier
-            .height(340.dp)
-            .padding(
-                top = 6.dp
-            ),
+            .fillMaxSize()
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )
     {
         Image(
             painter = painterResource(id = R.drawable.no_transactions),
-            contentDescription = IMAGE
+            contentDescription = IMAGE_NO_MOVEMENTS
         )
 
         Text(

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import com.daniel.budgetplanner.utils.IMAGE
+import com.daniel.budgetplanner.utils.IMAGE_STEPS
 
 @Composable
 fun ImageSteps(
@@ -21,7 +21,7 @@ fun ImageSteps(
     ) {
     Image(
         painter = painterResource(id = image),
-        contentDescription = IMAGE,
+        contentDescription = IMAGE_STEPS,
         modifier = Modifier
             .padding(top = pt, start = ps, bottom = pb)
             .width(width = width)

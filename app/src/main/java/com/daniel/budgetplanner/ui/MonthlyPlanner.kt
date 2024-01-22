@@ -95,7 +95,7 @@ fun MonthlyPlanner(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopShape(stringResource(id = R.string.plan_your_budget)) {}
+            TopShape(stringResource(id = R.string.plan_your_budget))
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

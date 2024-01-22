@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -79,6 +80,7 @@ fun MovementItem(
             ) {
                 Text(
                     text = item.name,
+                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
@@ -87,6 +89,7 @@ fun MovementItem(
 
                 Text(
                     text = item.category.gasto,
+                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Medium
@@ -99,6 +102,7 @@ fun MovementItem(
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Medium
                     ),
+                    color = Color.Black,
                     modifier = Modifier.padding( top = 2.dp)
                 )
             }
