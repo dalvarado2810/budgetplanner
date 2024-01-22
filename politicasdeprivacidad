@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad</title>
+</head>
+<body>
+
+  <h1>Política de Privacidad para Monitor de gastos</h1>
+
+  <p><strong>Fecha de vigencia:</strong> [Fecha de actualización]</p>
+
+  <p>Gracias por utilizar [Nombre de la Aplicación] ("nosotros", "nuestro", "nos"). Esta política de privacidad describe cómo recopilamos, usamos y compartimos información sobre usted cuando utiliza nuestra aplicación [Nombre de la Aplicación]. Al descargar, instalar y utilizar nuestra aplicación, usted acepta los términos de esta política de privacidad.</p>
+
+  <h2>1. Información Recopilada</h2>
+
+  <p>1.1 <strong>Información Personal:</strong>
+     <br>No recopilamos información personal identificable mientras utiliza la aplicación, ya que [Nombre de la Aplicación] opera de manera totalmente offline y no requiere conexión a internet.</p>
+
+  <p>1.2 <strong>Información Financiera:</strong>
+     <br>La aplicación puede recopilar y almacenar datos financieros relacionados con sus gastos y transacciones. Sin embargo, esta información se almacena de manera local en su dispositivo y no se transmite a nuestros servidores ni a terceros.</p>
+
+  <h2>2. Uso de la Información</h2>
+
+  <p>2.1 <strong>Propósito Principal:</strong>
+     <br>La información recopilada se utiliza exclusivamente con el propósito de ofrecer funcionalidades relacionadas con el monitoreo de gastos y facilitar la gestión financiera personal del usuario.</p>
+
+  <p>2.2 <strong>Sin Conexión a Internet:</strong>
+     <br>Dado que [Nombre de la Aplicación] opera offline, sus datos financieros no se transmiten a través de internet, garantizando la privacidad y seguridad de su información.</p>
+
+  <h2>3. Compartir Información</h2>
+
+  <p>3.1 <strong>Terceros:</strong>
+     <br>No compartimos su información con terceros, ya que la aplicación opera de manera local y no requiere la intervención de servicios externos.</p>
+
+  <p>3.2 <strong>Seguridad:</strong>
+     <br>Implementamos medidas de seguridad para proteger la información almacenada en su dispositivo. Sin embargo, es responsabilidad del usuario mantener su dispositivo seguro y protegido mediante el uso de contraseñas u otras medidas de seguridad.</p>
+
+  <h2>4. Cambios en la Política de Privacidad</h2>
+
+  <p>4.1 <strong>Actualizaciones:</strong>
+     <br>Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. Las actualizaciones se reflejarán en la versión más reciente de la aplicación disponible en la tienda de Google Play.</p>
+
+  <h2>5. Contacto</h2>
+
+  <p>Si tiene preguntas o inquietudes sobre esta política de privacidad, comuníquese con nosotros en [correo electrónico de soporte].</p>
+
+</body>
+</html>
