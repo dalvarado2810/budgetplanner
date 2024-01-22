@@ -331,13 +331,3 @@ fun BalancesStatusBar (
         }
     }
 }
-
-@Preview
-@Composable
-fun ShowMe(){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(BackGround)) {
-        BalancesStatusBar(120000000,130000000, -250000, -350000, -800000, -1200000, -4500, -9000000)
-    }
-}

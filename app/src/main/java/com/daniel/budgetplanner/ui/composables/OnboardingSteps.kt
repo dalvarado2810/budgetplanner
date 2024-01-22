@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.data.Steps
+import com.daniel.budgetplanner.ui.theme.OnboardingBackground
 import com.daniel.budgetplanner.ui.theme.fonts
 import com.daniel.budgetplanner.utils.IMAGE_STEP_IMAGE
 
@@ -54,7 +55,7 @@ fun OnboardingSteps(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xffDCF1DE))
+            .background(color = OnboardingBackground)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

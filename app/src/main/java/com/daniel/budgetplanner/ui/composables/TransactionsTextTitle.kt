@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.daniel.budgetplanner.R
+import com.daniel.budgetplanner.utils.WEIGHT_THREE
 
 @Composable
 fun TransactionsTextTitle(
@@ -30,7 +31,7 @@ fun TransactionsTextTitle(
             ),
             modifier = Modifier
                 .padding(8.dp)
-                .weight(3F)
+                .weight(WEIGHT_THREE)
         )
     }
 }

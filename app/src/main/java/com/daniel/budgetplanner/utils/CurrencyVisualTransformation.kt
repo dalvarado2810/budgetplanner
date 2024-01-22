@@ -10,7 +10,6 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.core.text.isDigitsOnly
 import com.daniel.budgetplanner.ui.toFormattedAmount
-import java.text.NumberFormat
 
 private class CurrencyVisualTransformation : VisualTransformation {
 

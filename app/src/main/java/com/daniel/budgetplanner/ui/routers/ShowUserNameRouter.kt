@@ -14,6 +14,8 @@ import com.daniel.budgetplanner.ui.composables.ShowNameInScreen
 import com.daniel.budgetplanner.utils.ScreensNavigation
 import kotlinx.coroutines.delay
 
+private const val MILLIS = 2000L
+
 @Composable
 fun ShowUserNameRouter(
     navController: NavController,
@@ -26,7 +28,7 @@ fun ShowUserNameRouter(
     ) {
         lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
             viewModel.setAction(MainContract.Action.ObtainUserName)
-            delay(2000)
+            delay(MILLIS)
             viewModel.uiState.collect { value = it.screenState }
         }
     }

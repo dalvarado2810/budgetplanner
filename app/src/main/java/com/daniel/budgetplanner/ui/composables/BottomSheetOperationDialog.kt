@@ -66,8 +66,11 @@ import com.daniel.budgetplanner.utils.EMPTY_STRING
 import com.daniel.budgetplanner.utils.HEALTH_EXPENSES
 import com.daniel.budgetplanner.utils.ICON_CLOSE
 import com.daniel.budgetplanner.utils.ICON_DATE
+import com.daniel.budgetplanner.utils.MAX_AMOUNT
+import com.daniel.budgetplanner.utils.MAX_INPUT
 import com.daniel.budgetplanner.utils.OUTFIT_EXPENSES
 import com.daniel.budgetplanner.utils.TRANSPORTATION_EXPENSES
+import com.daniel.budgetplanner.utils.ZERO_STRING
 import com.daniel.budgetplanner.utils.rememberCurrencyVisualTransformation
 import com.daniel.budgetplanner.utils.toCategoryItem
 import com.daniel.budgetplanner.utils.toViewPattern
@@ -196,7 +199,7 @@ fun BottomSheetOperationDialog(
             TextField(
                 value = descriptionText,
                 onValueChange = {
-                    if (it.text.length <= 26) descriptionText = it
+                    if (it.text.length <= MAX_INPUT) descriptionText = it
                 },
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.textFieldColors(
@@ -233,8 +236,8 @@ fun BottomSheetOperationDialog(
             TextField(
                 value = amountText,
                 onValueChange = {
-                    if (it.text.length <= 9 &&
-                        it.text.isDigitsOnly() && !it.text.startsWith("0")
+                    if (it.text.length <= MAX_AMOUNT &&
+                        it.text.isDigitsOnly() && !it.text.startsWith(ZERO_STRING)
                     ) amountText = it
                 },
                 shape = RoundedCornerShape(24.dp),

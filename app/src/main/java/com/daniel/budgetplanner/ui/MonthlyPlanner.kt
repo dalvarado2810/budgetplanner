@@ -49,6 +49,7 @@ import com.daniel.budgetplanner.ui.composables.BottomSheetOperationDialog
 import com.daniel.budgetplanner.ui.composables.MovementItem
 import com.daniel.budgetplanner.ui.composables.NoMovementsItem
 import com.daniel.budgetplanner.ui.composables.ContinueButton
+import com.daniel.budgetplanner.ui.theme.BackGround
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.ui.theme.CardColor
 import com.daniel.budgetplanner.ui.theme.ExpensesColor
@@ -90,7 +91,7 @@ fun MonthlyPlanner(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xfff0f4f3))
+            .background(color = BackGround)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally

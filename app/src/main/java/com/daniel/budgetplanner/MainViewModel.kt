@@ -28,8 +28,10 @@ class MainViewModel @Inject constructor(
         MainContract.Event
         >(
 ) {
-    val monthlyMovements = repository.getMovementsByName(getRangeOfDates().first,getRangeOfDates().second, getUserName())
-    val actualBalance = repository.getActualBalance(getRangeOfDates().first,getRangeOfDates().second,getUserName())
+    val monthlyMovements = repository
+        .getMovementsByName(getRangeOfDates().first,getRangeOfDates().second, getUserName())
+    val actualBalance = repository
+        .getActualBalance(getRangeOfDates().first,getRangeOfDates().second,getUserName())
 
     override fun createInitialState(): MainContract.State {
         return MainContract.State(

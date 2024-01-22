@@ -65,8 +65,7 @@ fun String.changeDateFormat(): String {
     return try {
         val originalDate = LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         originalDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-    } catch (e: Exception) {
-        e.printStackTrace()
+    } catch (error: Exception) {
         this
     }
 }

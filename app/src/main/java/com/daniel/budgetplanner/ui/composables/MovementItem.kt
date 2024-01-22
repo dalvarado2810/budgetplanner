@@ -29,6 +29,7 @@ import com.daniel.budgetplanner.data.MovementItem
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.ui.theme.CardColor
 import com.daniel.budgetplanner.ui.theme.ExpensesColor
+import com.daniel.budgetplanner.utils.WEIGHT_THREE
 import com.daniel.budgetplanner.utils.toNumberFormat
 
 @Composable
@@ -107,7 +108,7 @@ fun MovementItem(
                 )
             }
 
-            Column(modifier = Modifier.weight(3F)) {
+            Column(modifier = Modifier.weight(WEIGHT_THREE)) {
                 AmountTextView(item)
             }
         }

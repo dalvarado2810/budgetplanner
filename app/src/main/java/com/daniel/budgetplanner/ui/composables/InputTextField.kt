@@ -24,6 +24,7 @@ import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.ui.theme.BackGround
 import com.daniel.budgetplanner.ui.theme.BudgetGreen
 import com.daniel.budgetplanner.utils.EMPTY_STRING
+import com.daniel.budgetplanner.utils.MAX_INPUT
 
 @Composable
 fun InputTextField(
@@ -47,7 +48,7 @@ fun InputTextField(
        },
         onValueChange = {
             if (it.text.isEmpty()) saveName(EMPTY_STRING)
-            if (it.text.length <= 26) {
+            if (it.text.length <= MAX_INPUT) {
                 text = it
                 saveName(it.text)
             }

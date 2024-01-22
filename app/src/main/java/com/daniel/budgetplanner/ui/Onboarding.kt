@@ -36,6 +36,7 @@ import com.daniel.budgetplanner.R
 import com.daniel.budgetplanner.ui.composables.ContinueButton
 import com.daniel.budgetplanner.ui.composables.InputTextField
 import com.daniel.budgetplanner.ui.composables.TopShape
+import com.daniel.budgetplanner.ui.theme.BackGround
 import com.daniel.budgetplanner.utils.EMPTY_STRING
 import com.daniel.budgetplanner.utils.ICON_ONBOARDING
 import com.daniel.budgetplanner.utils.ICON_RIGHT
@@ -52,7 +53,7 @@ fun Onboarding(
         contentAlignment = Alignment.TopStart,
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xfff0f4f3))
+            .background(color = BackGround)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

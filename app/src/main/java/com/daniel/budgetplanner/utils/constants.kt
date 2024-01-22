@@ -35,3 +35,11 @@ const val IMAGE_ONBOARDING_STEP = "image_onboarding"
 const val STEP_ONE = 1
 const val STEP_TWO = 2
 const val STEP_THREE = 3
+
+const val WEIGHT_ONE = 1f
+const val WEIGHT_TWO = 2f
+const val WEIGHT_THREE = 3f
+
+const val MAX_INPUT = 26
+const val MAX_AMOUNT = 9
+const val ZERO_STRING = "0"
