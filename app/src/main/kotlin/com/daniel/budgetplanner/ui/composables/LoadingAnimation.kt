@@ -1,5 +1,6 @@
 package com.daniel.budgetplanner.ui.composables
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -22,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.daniel.budgetplanner.ui.theme.OnboardingBackground
@@ -106,4 +109,11 @@ fun LoadingAnimation3(
             ) { }
         }
     }
+}
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
+    wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE
+)
+@Composable
+fun LoadingViewPreview(){
+    LoadingAnimation()
 }
