@@ -1,6 +1,7 @@
 *.iml
 .gradle
-.idea
+/release
+/.idea
 /local.properties
 /.idea/*
 /.idea/libraries
