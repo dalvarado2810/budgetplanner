@@ -139,14 +139,12 @@ fun BudgetDashboard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Box(
-            ) {
+            Box {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -214,7 +212,6 @@ fun BudgetDashboard(
                                     )
                                 }
                             )
-
                         }
 
                         IconButton(
@@ -329,7 +326,6 @@ fun BudgetDashboard(
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
                     Text(
                         modifier = Modifier
                             .padding(top = 4.dp, bottom = 6.dp),

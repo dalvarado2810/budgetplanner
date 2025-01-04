@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "budgetplanner"
-include ':app'
+include (":app")
