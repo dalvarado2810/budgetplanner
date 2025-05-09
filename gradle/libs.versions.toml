@@ -1,20 +1,20 @@
 [versions]
-activityCompose = "1.7.1"
-coreKtx = "1.10.1"
+activityCompose = "1.10.1"
+coreKtx = "1.16.0"
 daggerCompiler = "2.51.1"
 detektGradlePlugin = "1.18.1"
-espressoCore = "3.5.1"
+espressoCore = "3.6.1"
 hiltAndroid = "2.51.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-lifecycleRuntimeKtx = "2.6.1"
-material = "1.4.3"
-material3Android = "1.2.0-alpha03"
-materialVersion = "1.9.0"
-navigationCompose = "2.6.0-rc01"
-roomKtx = "2.6.1"
-ui = "1.4.3"
-room = "2.6.1"
+junitVersion = "1.2.1"
+lifecycleRuntimeKtx = "2.8.7"
+material = "1.8.0"
+material3Android = "1.3.2"
+materialVersion = "1.12.0"
+navigationCompose = "2.8.9"
+roomKtx = "2.7.1"
+ui = "1.8.0"
+room = "2.7.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -42,6 +42,5 @@ junit = { module = "junit:junit", version.ref = "junit" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 
 [plugins]
-androidx-room = { id = "androidx.room", version.ref = "room"}
 
 [bundles]

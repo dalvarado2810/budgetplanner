@@ -48,6 +48,7 @@
     <string name="hello">Hola,   </string>
     <string name="add_your_name">Ingresa tu nombre</string>
     <string name="erase_user">Eliminar usuario</string>
+    <string name="all_categories">Todas las Categorías</string>
     <string name="change_date">Escoger nuevo período</string>
     <string name="agree">Acepto las </string>
     <string name="privacy_policy">Políticas de privacidad</string>
@@ -120,6 +121,7 @@
     <string name="save_movement">Guardar</string>
     <string name="item_amount">$ %1$s</string>
     <string name="no_movements_add">No tienes transacciones agregadas</string>
+    <string name="no_categories_movements_add">No tienes transacciones agregadas para esa categoria</string>
     <string name="add_movement_amount">Debes agregar un monto superior a CERO</string>
     <string name="last_transactions">Ultimas transacciones</string>
     <string name="select_range_of_date">Seleccion período a calcular</string>

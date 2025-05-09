@@ -33,6 +33,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,6 +68,7 @@ import com.daniel.budgetplanner.ui.composables.MovementButton
 import com.daniel.budgetplanner.ui.composables.BottomSheetOperationDialog
 import com.daniel.budgetplanner.ui.composables.MovementItem
 import com.daniel.budgetplanner.ui.composables.MyDateRangePickerDialog
+import com.daniel.budgetplanner.ui.composables.NoCategoryMovementsItem
 import com.daniel.budgetplanner.ui.composables.NoMovementsItem
 import com.daniel.budgetplanner.ui.composables.PolicyDialog
 import com.daniel.budgetplanner.ui.theme.BackGround
@@ -109,7 +111,9 @@ fun BudgetDashboard(
     }
     val comparator = Comparator<Movement> { a, b -> a.date.compareTo(b.date) }
     val expanded = remember { mutableStateOf(false) }
+    val expandedFilter = remember { mutableStateOf(false) }
     val showDatePicker = remember { mutableStateOf(false) }
+    val categorySelected: MutableState<String?> = remember { mutableStateOf(null) }
     val isDialogVisible = remember { mutableStateOf(false) }
     val formattedText = buildAnnotatedString {
         withStyle(style = SpanStyle(fontWeight = FontWeight.Light)) {
@@ -120,6 +124,16 @@ fun BudgetDashboard(
             append(userName)
         }
     }
+    val categories = listOf(
+        "Alimentación",
+        "Gastos hormiga",
+        "Servicios Públicos",
+        "Salud",
+        "Vestimenta",
+        "Transporte",
+        "Ingresos Mensuales",
+        "Ingresos varios"
+    )
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -326,39 +340,104 @@ fun BudgetDashboard(
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 4.dp, bottom = 6.dp),
-                        text = stringResource(
-                            id = R.string.dates,
-                            dates.first.changeDateFormat(),
-                            dates.second.changeDateFormat()
-                        ),
-                        color = Color.Black,
-                        style = LocalTextStyle.current.merge(
-                            TextStyle(
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                    ){
+                        Text(
+                            modifier = Modifier
+                                .padding(top = 4.dp, bottom = 6.dp, start = 24.dp),
+                            text = stringResource(
+                                id = R.string.dates,
+                                dates.first.changeDateFormat(),
+                                dates.second.changeDateFormat()
+                            ),
+                            color = Color.Black,
+                            style = LocalTextStyle.current.merge(
+                                TextStyle(
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Start
+                                )
                             )
                         )
-                    )
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(
+                            onClick = {
+                                expandedFilter.value = !expandedFilter.value
+                            },
+                            modifier = Modifier
+                                .padding(end = 24.dp)
+                                .sizeIn(48.dp),
+                        ) {
+                            Image(
+                                painterResource(id = R.drawable.baseline_menu_24),
+                                contentDescription = DROPDOWN_IMAGE,
+                                modifier = Modifier.sizeIn(48.dp)
+                            )
+                        }
+                    }
 
                     Box (
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
                     ){
+                        DropdownMenu(
+                            modifier = Modifier
+                                .background(BackGround),
+                            offset = DpOffset(248.dp, 0.dp),
+                            expanded = expandedFilter.value,
+                            onDismissRequest = { expandedFilter.value = false }
+                        ) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    categorySelected.value = null
+                                    expandedFilter.value = false
+                                },
+                                text = {
+                                    Text(
+                                        text = stringResource(id = R.string.all_categories),
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.Black
+                                    )
+                                }
+                            )
+                            categories.forEach { category ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        categorySelected.value = category
+                                        expandedFilter.value = false
+                                    },
+                                    text = {
+                                        Text(
+                                            text = category,
+                                            fontSize = 12.sp,
+                                            color = Color.Black
+                                        )
+                                    }
+                                )
+                            }
+                        }
                         if (movementsList.isEmpty()) {
                             NoMovementsItem()
                         } else {
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                state = listState
-                            ) {
-                                items(movementsList.sortedWith(comparator)) { item ->
-                                    MovementItem(item = item.toMovementItem())
+                            val filteredList = movementsList
+                                .filter { categorySelected.value == null ||
+                                        it.movementCategory.gasto == categorySelected.value }
+                                .sortedWith(comparator)
+                            if (filteredList.isEmpty()) {
+                                NoCategoryMovementsItem()
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    state = listState
+                                ) {
+                                    items(filteredList
+                                    ) { item ->
+                                        MovementItem(item = item.toMovementItem())
+                                    }
                                 }
                             }
                         }
