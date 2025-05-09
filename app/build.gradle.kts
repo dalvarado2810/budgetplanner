@@ -1,12 +1,11 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
+    id("kotlin-android")
     id("io.gitlab.arturbosch.detekt")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("androidx.room")
+
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -19,15 +18,12 @@ android {
         targetSdk = 35
         versionCode = 8
         versionName = "1.1.2"
+        setProperty("archivesBaseName", "budgetPlanner-$versionName-($versionCode)" )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
-
-    room {
-        schemaDirectory("$projectDir/schemas")
     }
 
     buildTypes {
@@ -39,35 +35,29 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            applicationVariants.all {
-                outputs.all {
-                    val flavor = name
-                    val versionName = versionName
-                    val versionCode = versionCode
-                    (this as? com.android.build.gradle.api.ApkVariantOutput)?.outputFileName =
-                        "BudgetPlanner-$flavor-v$versionName($versionCode).apk"
-                }
-            }
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
+        freeCompilerArgs += listOf("-Xcontext-receivers")
     }
 
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        buildConfig = true
     }
 
-    packagingOptions {
+    composeCompiler {
+        reportsDestination = file("build/outputs/compose.reports")
+        metricsDestination = file("build/outputs/compose.metrics")
+    }
+
+    packaging {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
@@ -77,6 +67,7 @@ android {
 dependencies {
 
     //Base
+    implementation(libs.bundles.base)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -87,17 +78,10 @@ dependencies {
     implementation(libs.androidx.material)
 
     //Navigation
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.navigation.compose)
 
     //Dependency Injection
-    implementation(libs.hilt.android)
-    ksp (libs.google.dagger.compiler)
-    ksp (libs.hilt.compiler)
-
-    //Room
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
+    implementation(libs.bundles.koin)
 
     //UI
     implementation (libs.material)
