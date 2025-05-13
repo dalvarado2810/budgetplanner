@@ -1,7 +1,7 @@
 package com.daniel.budgetplanner.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,12 +16,13 @@ fun AppScreen(
 ) {
     if (state !is App.State.Content) return
 
-    Box() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    Box {
         Scaffold(
             modifier = Modifier,
-        ) { innerPadding ->
+        ) { _ ->
             ProductsNavHost(
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier,
                 startDestination = state.startDestination,
                 navController = navController
             )

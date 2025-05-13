@@ -7,12 +7,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.daniel.base.Product
 import com.daniel.base.presentation.model.Destination
+import com.daniel.budgetplanner.onboarding.OnboardingProduct
 import org.koin.core.context.loadKoinModules
 import java.util.concurrent.atomic.AtomicBoolean
 
 private val initLocker = AtomicBoolean(false)
 
-private val budgetProducts = listOf<Product>()
+private val budgetProducts = listOf<Product>(
+    OnboardingProduct
+)
 
 @Composable
 fun ProductsNavHost(

@@ -20,10 +20,10 @@ fun AppRoute(
     viewModel: AppViewModel = koinViewModel()
 ) {
     val viewState by viewModel.state.collectAsStateWithLifecycle()
-    val navcontroller = rememberNavController()
+    val navController = rememberNavController()
 
-    LaunchedEffect(navcontroller)  {
-        navcontroller
+    LaunchedEffect(navController)  {
+        navController
             .viewModelFlow()
             .flowOn(Dispatchers.IO)
             .collectLatest { currentViewModel ->
@@ -45,6 +45,6 @@ fun AppRoute(
 
     AppScreen(
         state = viewState,
-        navController = navcontroller
+        navController = navController
     )
 }

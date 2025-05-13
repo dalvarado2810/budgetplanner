@@ -5,7 +5,6 @@ plugins {
 
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-
 }
 
 android {
@@ -76,6 +75,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.material)
+
+    //Products and Navigation
+    implementation(libs.bundles.products)
+    implementation(libs.bundles.navigations)
 
     //Navigation
     implementation(libs.navigation.compose)

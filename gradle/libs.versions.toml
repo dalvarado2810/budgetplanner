@@ -15,6 +15,8 @@ materialVersion = "1.12.0"
 navigation-compose = "2.9.0"
 ui = "1.8.0"
 bugget-planner-base = "1.0.0"
+budget-planner-onboarding = "1.0.0"
+budget-planner-onboarding-navigation = "1.0.0"
 
 [libraries]
 
@@ -24,6 +26,12 @@ koin-androix-compose = { module = "io.insert-koin:koin-androidx-compose", versio
 
 # Base
 budget-planner-base = { module = "com.daniel:base", version.ref = "bugget-planner-base"}
+
+# Products
+budget-planner-onboarding = { module = "com.daniel.budgetplanner:onboarding", version.ref = "budget-planner-onboarding" }
+
+# Products Navigations
+budget-planner-onboarding-navigation = { module = "com.daniel.budgetplanner:onboarding-navigation", version.ref = "budget-planner-onboarding-navigation" }
 
 # Compose
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose"}
@@ -58,3 +66,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 [bundles]
 koin = ["koin-android", "koin-androix-compose"]
 base = ["budget-planner-base"]
+products = ["budget-planner-onboarding"]
+navigations = ["budget-planner-onboarding-navigation"]
