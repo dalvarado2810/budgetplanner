@@ -12,8 +12,7 @@ class StartUpUseCase(
     val storageRepository: StorageRepository
 ) : FlowUseCase<Unit, StartUpResult, Nothing>() {
     override suspend fun executeOnBackground(params: Unit): Flow<StartUpResult> {
-        val isUserSaved = storageRepository.getUser() != null
-        val destination = if (!isUserSaved) OnboardingDestination.NavGraph
+        val destination = if (storageRepository.getUser().isNullOrEmpty()) OnboardingDestination.NavGraph
         else DashboardDestination.NavGraph
         return flowOf(
             StartUpResult (
