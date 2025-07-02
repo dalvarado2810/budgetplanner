@@ -15,8 +15,8 @@ android {
         applicationId = "com.daniel.budgetplanner"
         minSdk = 28
         targetSdk = 35
-        versionCode = 8
-        versionName = "1.1.2"
+        versionCode = 9
+        versionName = "1.1.3"
         setProperty("archivesBaseName", "budgetPlanner-$versionName-($versionCode)" )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
